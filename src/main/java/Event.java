@@ -12,4 +12,9 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + " (from: " + startDate + " to: " + endDate + ")";
     }
+
+    @Override
+    public TaskType getTaskType() {
+        return TaskType.EVENT;
+    }
 }

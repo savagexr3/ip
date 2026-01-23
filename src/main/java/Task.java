@@ -1,6 +1,7 @@
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected TaskType taskType;
 
     public Task(String description) {
         this.description = description;
@@ -29,4 +30,6 @@ public class Task {
     public String toString() {
         return "["+ this.getStatusIcon() + "] " + this.description;
     }
+
+    public TaskType getTaskType() { return null; }
 }

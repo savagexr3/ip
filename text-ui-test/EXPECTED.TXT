@@ -123,7 +123,7 @@ Now you have 6 tasks in the list.
  "event [task name] /from [start date/time] /to [end date/time]".
 ──────────────────────────────────────────────────────────────────
 ──────────────────────────────────────────────────────────────────
- Invalid input :( Please try again!
+ Invalid input: blah
 ──────────────────────────────────────────────────────────────────
 ──────────────────────────────────────────────────────────────────
  Bye. Hope to see you again soon!

@@ -11,7 +11,7 @@ public class Orbit {
 
         System.out.println("  ____   ____  ____  ___ _____");
         System.out.println(" / __ \\ / __ \\|  _ \\|_ _|_   _|");
-        System.out.println("| |  | | |  | | |_) || |  | |");
+        System.out.println("| |  | | |_| | |_) || |  | |");
         System.out.println("| |  | | |  | |  _ < | |  | |");
         System.out.println("| |__| | |__| | |_) || |  | |");
         System.out.println(" \\____/ \\____/|____/|___| |_|");
@@ -22,87 +22,106 @@ public class Orbit {
 
         while ((userInput = reader.readLine()) != null) {
             try {
-                if (userInput.equalsIgnoreCase("bye")) break;
+                String[] inputs = userInput.split(" ",2);
+                Command command;
+                try {
+                    command = Command.valueOf(inputs[0].toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    throw new OrbitException("Invalid input: " + inputs[0]);
+                }
 
-                if (userInput.equalsIgnoreCase("list")) {
-                    handleList(storage.getTasks());
-                } else if (userInput.startsWith("mark")) {
-                    String[] parts = userInput.split(" ", 2);
-                    if (parts.length != 2) throw new OrbitException("Please specify a task number to mark.");
-                    int index;
-                    try {
-                        index = Integer.parseInt(parts[1]) - 1;
-                        handleMark(storage.getTask(index));
-                    } catch (NumberFormatException e) {
-                        throw new OrbitException("Task number must be a number.");
-                    } catch (IndexOutOfBoundsException e) {
-                        throw new OrbitException("Invalid task number.");
+                switch (command) {
+                    case LIST -> handleList(storage.getTasks());
+
+                    case MARK -> {;
+                        if (inputs.length != 2) throw new OrbitException("Please specify a task number to mark.");
+                        int index;
+                        try {
+                            index = Integer.parseInt(inputs[1]) - 1;
+                            handleMark(storage.getTask(index));
+                        } catch (NumberFormatException e) {
+                            throw new OrbitException("Task number must be a number.");
+                        } catch (IndexOutOfBoundsException e) {
+                            throw new OrbitException("Invalid task number.");
+                        }
                     }
-                } else if (userInput.startsWith("unmark")) {
-                    String[] parts = userInput.split(" ", 2);
-                    if (parts.length != 2) throw new OrbitException("Please specify a task number to unmark.");
-                    int index;
-                    try {
-                        index = Integer.parseInt(parts[1]) - 1;
-                        handleUnmark(storage.getTask(index));
-                    } catch (NumberFormatException e) {
-                        throw new OrbitException("Task number must be a number.");
-                    } catch (IndexOutOfBoundsException e) {
-                        throw new OrbitException("Invalid task number.");
+
+                    case UNMARK -> {
+                        if (inputs.length != 2) throw new OrbitException("Please specify a task number to unmark.");
+                        int index;
+                        try {
+                            index = Integer.parseInt(inputs[1]) - 1;
+                            handleUnmark(storage.getTask(index));
+                        } catch (NumberFormatException e) {
+                            throw new OrbitException("Task number must be a number.");
+                        } catch (IndexOutOfBoundsException e) {
+                            throw new OrbitException("Invalid task number.");
+                        }
                     }
-                } else if (userInput.startsWith("delete")) {
-                    String[] parts = userInput.split(" ", 2);
-                    if (parts.length != 2) throw new OrbitException("Please specify a task number to delete.");
-                    int index;
-                    try {
-                        index = Integer.parseInt(parts[1]) - 1;
-                        handleDelete(storage, index);
-                    } catch (NumberFormatException e) {
-                        throw new OrbitException("Task number must be a number.");
-                    } catch (IndexOutOfBoundsException e) {
-                        throw new OrbitException("Invalid task number.");
+
+                    case DELETE -> {
+                        if (inputs.length != 2) throw new OrbitException("Please specify a task number to delete.");
+                        int index;
+                        try {
+                            index = Integer.parseInt(inputs[1]) - 1;
+                            handleDelete(storage, index);
+                        } catch (NumberFormatException e) {
+                            throw new OrbitException("Task number must be a number.");
+                        } catch (IndexOutOfBoundsException e) {
+                            throw new OrbitException("Invalid task number.");
+                        }
                     }
-                } else if (userInput.startsWith("todo")) {
-                    String[] description = userInput.split(" ", 2);
-                    if (description.length != 2) throw new OrbitException("Invalid todo task. Please include task name.");
-                    String todoTask = description[1];
-                    handleTodo(storage, new ToDo(todoTask));
-                } else if (userInput.startsWith("deadline")) {
-                    String[] description = userInput.split(" ", 2);
-                    if (description.length != 2) throw new OrbitException("Invalid deadline task. Please include task name.");
-                    String deadlineTask = description[1];
 
-                    String[] deadlineTaskDescription = deadlineTask.split(" /by ");
-                    if  (deadlineTaskDescription.length != 2) throw new OrbitException("Invalid deadline task description.\nPlease include \"deadline [task name] /by [deadline date/time]\".");
-                    String deadlineName = deadlineTaskDescription[0];
-                    String deadlineTime = deadlineTaskDescription[1];
-                    handleDeadline(storage, new Deadline(deadlineName, deadlineTime));
-                } else if (userInput.startsWith("event")) {
-                    String[] description = userInput.split(" ", 2);
-                    if (description.length != 2)
-                        throw new OrbitException("Invalid event task. Please include task name.");
-                    String eventTask = description[1];
+                    case TODO -> {
+                        if (inputs.length != 2)
+                            throw new OrbitException("Invalid todo task. Please include task name.");
+                        String todoTask = inputs[1];
+                        handleTodo(storage, new ToDo(todoTask));
+                    }
 
-                    String[] eventTaskDescription = eventTask.split(" /from ");
-                    if (eventTaskDescription.length != 2)
-                        throw new OrbitException("Invalid event task description. Please include\n\"event [task name] /from [start date/time] /to [end date/time]\".");
-                    String eventName = eventTask.split(" /from ")[0];
-                    String eventDate = eventTask.split(" /from ")[1];
+                    case DEADLINE -> {
+                        if (inputs.length != 2)
+                            throw new OrbitException("Invalid deadline task. Please include task name.");
+                        String deadlineTask = inputs[1];
 
-                    String[] eventTimeDescription = eventDate.split(" /to ", 2);
-                    if (eventTimeDescription.length != 2)
-                        throw new OrbitException("Invalid event task description. Please include\n\"event [task name] /from [start date/time] /to [end date/time]\".");
-                    String eventStart = eventTimeDescription[0];
-                    String eventEnd = eventTimeDescription[1];
-                    handleEvent(storage, new Event(eventName, eventStart, eventEnd));
-                } else throw new OrbitException("Invalid input :( Please try again!");
+                        String[] deadlineTaskDescription = deadlineTask.split(" /by ");
+                        if (deadlineTaskDescription.length != 2)
+                            throw new OrbitException("Invalid deadline task description.\nPlease include \"deadline [task name] /by [deadline date/time]\".");
+                        String deadlineName = deadlineTaskDescription[0];
+                        String deadlineTime = deadlineTaskDescription[1];
+                        handleDeadline(storage, new Deadline(deadlineName, deadlineTime));
+                    }
+
+                    case EVENT -> {
+                        if (inputs.length != 2)
+                            throw new OrbitException("Invalid event task. Please include task name.");
+                        String eventTask = inputs[1];
+
+                        String[] eventTaskDescription = eventTask.split(" /from ");
+                        if (eventTaskDescription.length != 2)
+                            throw new OrbitException("Invalid event task description. Please include\n\"event [task name] /from [start date/time] /to [end date/time]\".");
+                        String eventName = eventTask.split(" /from ")[0];
+                        String eventDate = eventTask.split(" /from ")[1];
+
+                        String[] eventTimeDescription = eventDate.split(" /to ", 2);
+                        if (eventTimeDescription.length != 2)
+                            throw new OrbitException("Invalid event task description. Please include\n\"event [task name] /from [start date/time] /to [end date/time]\".");
+                        String eventStart = eventTimeDescription[0];
+                        String eventEnd = eventTimeDescription[1];
+                        handleEvent(storage, new Event(eventName, eventStart, eventEnd));
+                    }
+
+                    case BYE -> {
+                        ConsoleUI.responseBox("Bye. Hope to see you again soon!");
+                        break; // breaks out of switch, not loop
+                    }
+
+                }
             } catch (OrbitException e) {
                 ConsoleUI.responseBox(e.getMessage());
             }
+
         }
-
-        ConsoleUI.responseBox("Bye. Hope to see you again soon!");
-
     }
 
     private static void handleList(ArrayList<Task> tasks) {
@@ -151,8 +170,9 @@ public class Orbit {
     }
 
     private static void handleDelete(Storage storage, int index) {
-        ConsoleUI.deleteTaskBox(storage.size()-1, storage.getTask(index).toString());
+        Task t = storage.getTask(index);
         storage.remove(index);
+        ConsoleUI.deleteTaskBox(storage.size(), t.toString());
     }
 }
 
