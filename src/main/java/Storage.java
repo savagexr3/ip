@@ -19,7 +19,7 @@ public class Storage {
         this.tasks.remove(index);
     }
 
-    public void size(){
-        this.tasks.size();
+    public int size(){
+        return this.tasks.size();
     }
 }

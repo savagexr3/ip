@@ -8,24 +8,22 @@ public class Orbit {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Storage storage = new Storage();
 
-        System.out.println("──────────────────────────────────────────────────────────────────");
-        System.out.println(" ██████╗ ██╗  ██╗ █████╗ ████████╗ ██████╗ ██████╗ ████████╗");
-        System.out.println("██╔════╝ ██║  ██║██╔══██╗╚══██╔══╝██╔════╝ ██╔══██╗╚══██╔══╝");
-        System.out.println("██║  ███╗███████║███████║   ██║   ██║  ███╗██████╔╝   ██║   ");
-        System.out.println("██║   ██║██╔══██║██╔══██║   ██║   ██║   ██║██╔═══╝    ██║   ");
-        System.out.println("╚██████╔╝██║  ██║██║  ██║   ██║   ╚██████╔╝██║        ██║   ");
-        System.out.println(" ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝        ╚═╝   ");
+        System.out.println("  ____   ____  ____  ___ _____");
+        System.out.println(" / __ \\ / __ \\|  _ \\|_ _|_   _|");
+        System.out.println("| |  | | |  | | |_) || |  | |");
+        System.out.println("| |  | | |  | |  _ < | |  | |");
+        System.out.println("| |__| | |__| | |_) || |  | |");
+        System.out.println(" \\____/ \\____/|____/|___| |_|");
 
-        ConsoleUI.responseBox("Hello! I'm ChatGPT", "What can I do for you?");
+        ConsoleUI.responseBox("Hello! I'm Orbit", "What can I do for you?");
 
         String userInput;
 
         while ((userInput = reader.readLine()) != null) {
-            ArrayList<Task> tasks = storage.getTasks();
             if (userInput.equalsIgnoreCase("bye")) break;
 
             if (userInput.equalsIgnoreCase("list")) {
-                handleList(tasks);
+                handleList(storage.getTasks());
             } else if (userInput.startsWith("mark")) {
                 int index = Integer.parseInt(userInput.split(" ")[1])-1;
                 handleMark(storage.getTask(index));
@@ -34,19 +32,19 @@ public class Orbit {
                 handleUnmark(storage.getTask(index));
             } else if (userInput.startsWith("todo")) {
                 String todoTask = userInput.split(" ",2)[1];
-                handleTodo(tasks, new ToDo(todoTask));
+                handleTodo(storage, new ToDo(todoTask));
             } else if (userInput.startsWith("deadline")) {
                 String deadlineTask = userInput.split(" ",2)[1];
                 String deadlineName = deadlineTask.split(" /by ")[0];
                 String deadlineTime = deadlineTask.split(" /by ")[1];
-                handleDeadline(tasks,new Deadline(deadlineName, deadlineTime));
+                handleDeadline(storage,new Deadline(deadlineName, deadlineTime));
             } else if (userInput.startsWith("event")) {
                 String eventTask = userInput.split(" ",2)[1];
                 String eventName = eventTask.split(" /from ")[0];
                 String eventDate = eventTask.split(" /from ")[1];
                 String eventStart = eventDate.split(" /to ")[0];
                 String eventEnd = eventDate.split(" /to ")[1];
-                handleEvent(tasks,new Event(eventName,eventStart,eventEnd));
+                handleEvent(storage,new Event(eventName,eventStart,eventEnd));
             } else {
                 Task task = new Task(userInput);
                 storage.add(task);
@@ -85,20 +83,20 @@ public class Orbit {
         ConsoleUI.responseBox(sb.toString().trim());
     }
 
-    private static void handleTodo(ArrayList<Task> tasks, ToDo newToDoTask) {
-        tasks.add(newToDoTask);
-        ConsoleUI.newTaskBox(tasks.size(),newToDoTask.toString());
+    private static void handleTodo(Storage storage, ToDo newToDoTask) {
+        storage.add(newToDoTask);
+        ConsoleUI.newTaskBox(storage.size(),newToDoTask.toString());
 
     }
 
-    private static void handleDeadline(ArrayList<Task> tasks, Deadline newDeadlineTask) {
-        tasks.add(newDeadlineTask);
-        ConsoleUI.newTaskBox(tasks.size(),newDeadlineTask.toString());
+    private static void handleDeadline(Storage storage, Deadline newDeadlineTask) {
+        storage.add(newDeadlineTask);
+        ConsoleUI.newTaskBox(storage.size(),newDeadlineTask.toString());
     }
 
-    private static void handleEvent(ArrayList<Task> tasks, Event newEventTask) {
-        tasks.add(newEventTask);
-        ConsoleUI.newTaskBox(tasks.size(),newEventTask.toString());
+    private static void handleEvent(Storage storage, Event newEventTask) {
+        storage.add(newEventTask);
+        ConsoleUI.newTaskBox(storage.size(),newEventTask.toString());
     }
 }
 

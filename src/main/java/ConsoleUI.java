@@ -1,7 +1,8 @@
 public class ConsoleUI {
     private static final String LINE_SEPARATOR = "──────────────────────────────────────────────────────────────────";
-    private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final boolean USE_COLOR = System.console() != null; // false when redirected
+    private static final String ANSI_RESET = USE_COLOR ? "\u001B[0m" : "";
+    private static final String ANSI_BLUE  = USE_COLOR ? "\u001B[34m" : "";
 
 
     public static void responseBox(String... input) {
