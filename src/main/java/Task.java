@@ -1,14 +1,32 @@
-import java.util.ArrayList;
-
 public class Task {
-    private final ArrayList<String> tasks = new ArrayList<>();
+    private String description;
+    private boolean isDone;
 
-    public void addTasks(String task) {
-        this.tasks.add(task);
+    public Task(String description) {
+        this.description = description;
+        this.isDone = false;
     }
 
-    public ArrayList<String> getTasks() {
-        return this.tasks;
+    public String getStatusIcon() {
+        return (isDone ? "X" : " "); // mark done task with X
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void markAsDone() {
+        isDone = true;
+    }
+
+    public void markAsNotDone() {isDone = false;}
+
+    @Override
+    public String toString() {
+        return "["+ this.getStatusIcon() + "] " + this.description;
+    }
 }
