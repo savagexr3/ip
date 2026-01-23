@@ -6,8 +6,10 @@ public class ConsoleUI {
 
     public static void responseBox(String... input) {
         System.out.println(LINE_SEPARATOR);
-        for (String line : input) {
-            System.out.println(ANSI_BLUE + line + ANSI_RESET);
+        for (String block : input) {
+            for (String line : block.split("\n")) {
+                System.out.println(ANSI_BLUE + " " + line + ANSI_RESET);
+            }
         }
         System.out.println(LINE_SEPARATOR);
     }
