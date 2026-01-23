@@ -23,9 +23,19 @@ public class ConsoleUI {
                 System.out.println(ANSI_BLUE + " " + line + ANSI_RESET);
             }
         }
-        System.out.println("Now you have " + size + " task" + (size>1?"s":"") + " in the list.");
+        System.out.println("Now you have " + size + " task" + (size > 1 ? "s" : "") + " in the list.");
         System.out.println(LINE_SEPARATOR);
-
     }
 
+    public static void deleteTaskBox(int size, String... input) {
+        System.out.println(LINE_SEPARATOR);
+        System.out.println("Noted. I've removed this task:");
+        for (String block : input) {
+            for (String line : block.split("\n")) {
+                System.out.println(ANSI_BLUE + " " + line + ANSI_RESET);
+            }
+        }
+        System.out.println("Now you have " + size + " task" + (size > 1? "s" : "") + " in the list.");
+        System.out.println(LINE_SEPARATOR);
+    }
 }

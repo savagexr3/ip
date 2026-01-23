@@ -97,6 +97,21 @@ Got it. I've added this task:
 Now you have 7 tasks in the list.
 ──────────────────────────────────────────────────────────────────
 ──────────────────────────────────────────────────────────────────
+ Here are the tasks in your list:
+ 1. [T][X] read book
+ 2. [D][ ] return book (by: June 6th)
+ 3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+ 4. [T][X] join sports club
+ 5. [T][ ] borrow book
+ 6. [D][ ] return book (by: Sunday)
+ 7. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+──────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────
+Noted. I've removed this task:
+ [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+Now you have 6 tasks in the list.
+──────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────
  Invalid todo task. Please include task name.
 ──────────────────────────────────────────────────────────────────
 ──────────────────────────────────────────────────────────────────
