@@ -15,4 +15,9 @@ public class Deadline extends Task{
     public TaskType getTaskType() {
         return TaskType.DEADLINE;
     }
+
+    @Override
+    public String toFileString() {
+        return "D" + super.toFileString() + " | " + deadline;
+    }
 }

@@ -24,12 +24,20 @@ public class Task {
         isDone = true;
     }
 
-    public void markAsNotDone() {isDone = false;}
+    public void markAsNotDone() {
+        isDone = false;
+    }
 
     @Override
     public String toString() {
         return "["+ this.getStatusIcon() + "] " + this.description;
     }
 
-    public TaskType getTaskType() { return null; }
+    public TaskType getTaskType() {
+        return null;
+    }
+
+    public String toFileString() {
+        return " | "+ (this.isDone? "1" : "0") + " | " + this.description;
+    }
 }

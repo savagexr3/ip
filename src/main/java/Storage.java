@@ -1,25 +1,92 @@
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 public class Storage {
-    private final ArrayList<Task> tasks = new ArrayList<>();
 
-    public void add(Task task) {
-        this.tasks.add(task);
+    private final File file;
+
+    public Storage(String filePath) {
+        this.file = new File(filePath);
     }
 
-    public ArrayList<Task> getTasks() {
-        return this.tasks;
+    public TaskList load() throws OrbitException {
+        ensureFileExists();
+
+        TaskList taskList = new TaskList();
+
+        // always calls br.close() at the end even if an exception occurs to prevent resource leakage
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                try {
+                    Task task = parseTask(line);
+                    taskList.add(task);
+                } catch (Exception e) {
+                    // stretch goal: corrupted line → skip
+                    System.out.println("Skipping corrupted line: " + line);
+                }
+            }
+        } catch (IOException e) {
+            throw new OrbitException("Error reading save file.");
+        }
+
+        return taskList;
     }
 
-    public  Task getTask(int index){
-        return this.tasks.get(index);
+    public void save(TaskList taskList) throws OrbitException {
+        ensureFileExists();
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            for (Task task : taskList.getTasks()) {
+                bw.write(task.toFileString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            throw new OrbitException("Error saving tasks.");
+        }
     }
 
-    public void remove(int index){
-        this.tasks.remove(index);
+    private void ensureFileExists() throws OrbitException {
+        try {
+            File parent = file.getParentFile();
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();
+            }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (IOException e) {
+            throw new OrbitException("Unable to create save file.");
+        }
     }
 
-    public int size(){
-        return this.tasks.size();
+    private Task parseTask(String line) {
+        String[] parts = line.split(" \\| ");
+
+        boolean isDone = parts[1].equals("1");
+
+        switch (parts[0]) {
+        case "T":
+            Task t = new ToDo(parts[2]);
+            if (isDone) t.markAsDone();
+            return t;
+
+        case "D":
+            Task d = new Deadline(parts[2], parts[3]);
+            if (isDone) d.markAsDone();
+            return d;
+
+        case "E":
+            Task e = new Event(parts[2], parts[3], parts[4]);
+            if (isDone) e.markAsDone();
+            return e;
+
+        default:
+            throw new IllegalArgumentException("Unknown task type");
+        }
     }
 }
