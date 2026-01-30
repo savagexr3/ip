@@ -3,6 +3,7 @@ package orbit.parser;
 import orbit.command.Command;
 import orbit.command.CommandType;
 
+import orbit.command.FindCommand;
 import orbit.command.ListCommand;
 import orbit.command.AddDeadlineCommand;
 import orbit.command.AddEventCommand;
@@ -61,6 +62,9 @@ public class Parser {
 
         case EVENT:
             return new AddEventCommand(parseEvent(args));
+
+        case FIND:
+            return new FindCommand(args);
 
         default:
             throw new OrbitException("Invalid input: " + inputs[0]);
