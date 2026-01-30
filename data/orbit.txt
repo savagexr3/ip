@@ -1,5 +1,3 @@
-T | 0 | read book
-D | 1 | return book | June 6th
-T | 0 | join sports club
-T | 0 | resign
-D | 1 | blackpink concert | 30 Jan
+T | 0 | get fired
+D | 1 | assignment | 2026-12-30T23:59
+E | 0 | deadline concert | 2025-12-20T20:00 | 2025-12-20T22:00

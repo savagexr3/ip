@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.time.LocalDateTime;
 
 public class Storage {
 
@@ -76,12 +77,12 @@ public class Storage {
             return t;
 
         case "D":
-            Task d = new Deadline(parts[2], parts[3]);
+            Task d = new Deadline(parts[2], LocalDateTime.parse(parts[3]));
             if (isDone) d.markAsDone();
             return d;
 
         case "E":
-            Task e = new Event(parts[2], parts[3], parts[4]);
+            Task e = new Event(parts[2], LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
             if (isDone) e.markAsDone();
             return e;
 

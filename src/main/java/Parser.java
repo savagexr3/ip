@@ -1,3 +1,8 @@
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Parser {
     
     public static ParsedInput parse(String userInput) throws OrbitException {
@@ -36,46 +41,57 @@ public class Parser {
     }
 
     public static Deadline parseDeadline(String args) throws OrbitException {
-        if (args == null || args.trim().isEmpty()) {
-            throw new OrbitException("Invalid deadline task. Please include task name.");
+        try {
+            if (args == null || args.trim().isEmpty()) {
+                throw new OrbitException("Invalid deadline task. Please include task name.");
+            }
+            String[] parts = args.split(" /by ", 2);
+            if (parts.length != 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
+                throw new OrbitException(
+                    "Invalid deadline task description.\n"
+                            + "Please include \"deadline [task name] /by [deadline date/time]\"."
+                );
+            }
+            LocalDateTime deadlineDateTime = parseDateTime(parts[1]);
+            return new Deadline(parts[0].trim(),deadlineDateTime);
+        } catch (DateTimeParseException e) {
+            throw new OrbitException("Invalid deadline date and/or time format. \n"
+                    + "Please follow: [YYYY-MM-DD HH:MM]\n");
         }
-
-        String[] parts = args.split(" /by ", 2);
-        if (parts.length != 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
-            throw new OrbitException(
-                    "Invalid deadline task description.\n" +
-                            "Please include \"deadline [task name] /by [deadline date/time]\"."
-            );
-        }
-
-        return new Deadline(parts[0].trim(), parts[1].trim());
     }
 
     public static Event parseEvent(String args) throws OrbitException {
-        if (args == null || args.trim().isEmpty()) {
-            throw new OrbitException("Invalid event task. Please include task name.");
-        }
+        try {
+            if (args == null || args.trim().isEmpty()) {
+                throw new OrbitException("Invalid event task. Please include task name.");
+            }
 
-        String[] fromSplit = args.split(" /from ", 2);
-        if (fromSplit.length != 2 || fromSplit[0].trim().isEmpty()) {
-            throw new OrbitException(
+            String[] fromSplit = args.split(" /from ", 2);
+            if (fromSplit.length != 2 || fromSplit[0].trim().isEmpty()) {
+                throw new OrbitException(
                     "Invalid event task description. Please include\n" +
                             "\"event [task name] /from [start date/time] /to [end date/time]\"."
-            );
-        }
+                );
+            }
 
-        String eventName = fromSplit[0].trim();
-        String remainder = fromSplit[1];
+            String eventName = fromSplit[0].trim();
+            String remainder = fromSplit[1];
 
-        String[] toSplit = remainder.split(" /to ", 2);
-        if (toSplit.length != 2 || toSplit[0].trim().isEmpty() || toSplit[1].trim().isEmpty()) {
-            throw new OrbitException(
+            String[] toSplit = remainder.split(" /to ", 2);
+            if (toSplit.length != 2 || toSplit[0].trim().isEmpty() || toSplit[1].trim().isEmpty()) {
+                throw new OrbitException(
                     "Invalid event task description. Please include\n" +
                             "\"event [task name] /from [start date/time] /to [end date/time]\"."
-            );
-        }
+                );
+            }
 
-        return new Event(eventName, toSplit[0].trim(), toSplit[1].trim());
+            LocalDateTime startDateTime = parseDateTime(toSplit[0]);
+            LocalDateTime endDateTime = parseDateTime(toSplit[1]);
+            return new Event(eventName, startDateTime, endDateTime);
+        } catch (DateTimeParseException e) {
+            throw new OrbitException("Invalid event date and/or time format. \n"
+                    + "Please follow: [YYYY-MM-DD HH:MM]\n");
+        }
     }
 
     public static ToDo parseTodo(String args) throws OrbitException {
@@ -83,5 +99,13 @@ public class Parser {
             throw new OrbitException("Invalid todo task. Please include task name.");
         }
         return new ToDo(args.trim());
+    }
+
+    public static LocalDateTime parseDateTime(String dateTime) {
+        return LocalDateTime.parse(dateTime.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    }
+
+    public static String displayDateTime(LocalDateTime dateTime) {
+        return dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy hh:mma"));
     }
 }
