@@ -7,7 +7,18 @@ import orbit.ui.ConsoleUI;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a command that lists all tasks to the user.
+ */
 public class ListCommand implements Command {
+
+    /**
+     * Displays all tasks in the task list.
+     * If the list is empty, a corresponding message is shown.
+     *
+     * @param tasks Task list to display.
+     * @param storage Unused but required by the Command interface.
+     */
     @Override
     public void execute(TaskList tasks, Storage storage) {
         ArrayList<Task> list = tasks.getTasks();
@@ -23,4 +34,5 @@ public class ListCommand implements Command {
         ConsoleUI.responseBox(sb.toString().trim());
     }
 }
+
 

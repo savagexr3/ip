@@ -11,7 +11,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Entry point of the Orbit application.
+ * Handles program startup and command execution loop.
+ */
 public class Orbit {
+
+    /**
+     * Starts the Orbit application.
+     *
+     * @param args Command-line arguments (unused).
+     */
     public static void main(String[] args) throws IOException, OrbitException {
         try{
             new Orbit().run();
@@ -20,6 +30,10 @@ public class Orbit {
         }
     }
 
+    /**
+     * Runs the main program loop by reading user input,
+     * executing commands, and handling errors.
+     */
     public void run() throws IOException, OrbitException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         ConsoleUI.showWelcome();
@@ -31,9 +45,14 @@ public class Orbit {
 
         while (!isExit) {
             String fullCommand = reader.readLine();
-            Command c = Parser.parse(fullCommand);
-            c.execute(taskList, storage);
-            isExit = c.isExit();
+
+            try {
+                Command c = Parser.parse(fullCommand);
+                c.execute(taskList, storage);
+                isExit = c.isExit();
+            } catch (OrbitException e) {
+                ConsoleUI.responseBox(e.getMessage());
+            }
         }
     }
 }

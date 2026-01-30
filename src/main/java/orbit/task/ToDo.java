@@ -1,7 +1,15 @@
 package orbit.task;
 
+/**
+ * Represents a simple to-do task.
+ */
 public class ToDo extends Task {
 
+    /**
+     * Constructs a ToDo task with the given description.
+     *
+     * @param description Description of the task.
+     */
     public ToDo(String description) {
         super(description);
     }

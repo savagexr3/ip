@@ -4,9 +4,18 @@ import orbit.parser.Parser;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a task with a deadline.
+ */
 public class Deadline extends Task{
     protected LocalDateTime deadline;
 
+    /**
+     * Constructs a Deadline task.
+     *
+     * @param description Description of the task.
+     * @param deadline Deadline date and time.
+     */
     public Deadline(String description,LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
