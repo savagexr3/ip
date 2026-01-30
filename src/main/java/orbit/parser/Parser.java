@@ -62,6 +62,9 @@ public class Parser {
         case EVENT:
             return new AddEventCommand(parseEvent(args));
 
+        case FIND:
+            return new FindCommand(args);
+
         default:
             throw new OrbitException("Invalid input: " + inputs[0]);
         }
