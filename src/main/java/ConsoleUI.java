@@ -4,6 +4,16 @@ public class ConsoleUI {
     private static final String ANSI_RESET = USE_COLOR ? "\u001B[0m" : "";
     private static final String ANSI_BLUE  = USE_COLOR ? "\u001B[34m" : "";
 
+    public static void showWelcome() {
+        System.out.println("  ____   ____  ____  ___ _____");
+        System.out.println(" / __ \\ / __ \\|  _ \\|_ _|_   _|");
+        System.out.println("| |  | | |  | | |_) || |  | |");
+        System.out.println("| |  | | |  | |  _ < | |  | |");
+        System.out.println("| |__| | |__| | |_) || |  | |");
+        System.out.println(" \\____/ \\____/|____/|___| |_|");
+
+        responseBox("Hello! I'm Orbit", "What can I do for you?");
+    }
 
     public static void responseBox(String... input) {
         System.out.println(LINE_SEPARATOR);

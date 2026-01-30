@@ -1,11 +1,10 @@
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Parser {
     
-    public static ParsedInput parse(String userInput) throws OrbitException {
+    public static Command parse(String userInput) throws OrbitException {
         if (userInput == null) {
             throw new OrbitException("Input cannot be null.");
         }
@@ -16,16 +15,37 @@ public class Parser {
         }
 
         String[] inputs = trimmed.split(" ", 2);
+        CommandType cmd = CommandType.valueOf(inputs[0].toUpperCase());;
+        String args = (inputs.length == 2) ? inputs[1] : "";
 
-        Command command;
-        try {
-            command = Command.valueOf(inputs[0].toUpperCase());
-        } catch (IllegalArgumentException e) {
+        switch (cmd) {
+        case LIST:
+            return new ListCommand();
+
+        case BYE:
+            return new ByeCommand();
+
+        case TODO:
+            return new AddTodoCommand(parseTodo(args));
+
+        case MARK:
+            return new MarkCommand(parseTaskIndex(args));
+
+        case UNMARK:
+            return new UnmarkCommand(parseTaskIndex(args));
+
+        case DELETE:
+            return new DeleteCommand(parseTaskIndex(args));
+
+        case DEADLINE:
+            return new AddDeadlineCommand(parseDeadline(args));
+
+        case EVENT:
+            return new AddEventCommand(parseEvent(args));
+
+        default:
             throw new OrbitException("Invalid input: " + inputs[0]);
         }
-
-        String args = (inputs.length == 2) ? inputs[1] : "";
-        return new ParsedInput(command, args);
     }
 
     public static int parseTaskIndex(String args) throws OrbitException {
