@@ -14,7 +14,7 @@ public class ConsoleUI {
         System.out.println("| |__| | |__| | |_) || |  | |");
         System.out.println(" \\____/ \\____/|____/|___| |_|");
 
-        responseBox("Hello! I'm orbit.Orbit", "What can I do for you?");
+        responseBox("Hello! I'm Orbit.", "What can I do for you?");
     }
 
     public static void responseBox(String... input) {

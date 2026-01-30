@@ -1,5 +1,8 @@
 package orbit.command;
 
+/**
+ * Represents the supported command types in the Orbit application.
+ */
 public enum CommandType {
     LIST,
     MARK,
@@ -8,5 +11,6 @@ public enum CommandType {
     DELETE,
     DEADLINE,
     EVENT,
+    FIND,
     BYE
 }
