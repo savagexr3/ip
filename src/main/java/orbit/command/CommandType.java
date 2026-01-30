@@ -1,3 +1,5 @@
+package orbit.command;
+
 public enum CommandType {
     LIST,
     MARK,

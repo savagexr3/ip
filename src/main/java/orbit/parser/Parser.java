@@ -1,3 +1,22 @@
+package orbit.parser;
+
+import orbit.command.Command;
+import orbit.command.CommandType;
+
+import orbit.command.ListCommand;
+import orbit.command.AddDeadlineCommand;
+import orbit.command.AddEventCommand;
+import orbit.command.AddTodoCommand;
+import orbit.command.ByeCommand;
+import orbit.command.DeleteCommand;
+import orbit.command.MarkCommand;
+import orbit.command.UnmarkCommand;
+
+import orbit.exception.OrbitException;
+import orbit.task.Deadline;
+import orbit.task.Event;
+import orbit.task.ToDo;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -56,7 +75,7 @@ public class Parser {
         try {
             return Integer.parseInt(args.trim()) - 1; // convert to 0-based
         } catch (NumberFormatException e) {
-            throw new OrbitException("Task number must be a number.");
+            throw new OrbitException("orbit.task.Task number must be a number.");
         }
     }
 

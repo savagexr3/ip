@@ -1,3 +1,10 @@
+package orbit.command;
+
+import orbit.exception.OrbitException;
+import orbit.storage.Storage;
+import orbit.task.TaskList;
+import orbit.ui.ConsoleUI;
+
 public class ByeCommand implements Command {
     @Override
     public void execute(TaskList tasks, Storage storage) throws OrbitException {
