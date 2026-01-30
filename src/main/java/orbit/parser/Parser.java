@@ -21,8 +21,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parses user input into executable {@link Command} objects.
+ */
 public class Parser {
-    
+
+    /**
+     * Parses the user input string and returns the corresponding command.
+     *
+     * @param userInput Raw user input.
+     * @return Command to be executed.
+     * @throws OrbitException If the input is invalid or unsupported.
+     */
     public static Command parse(String userInput) throws OrbitException {
         if (userInput == null) {
             throw new OrbitException("Input cannot be null.");
@@ -34,7 +44,13 @@ public class Parser {
         }
 
         String[] inputs = trimmed.split(" ", 2);
-        CommandType cmd = CommandType.valueOf(inputs[0].toUpperCase());;
+        CommandType cmd;
+
+        try {
+            cmd = CommandType.valueOf(inputs[0].toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new OrbitException("Unknown command: " + inputs[0]);
+        }
         String args = (inputs.length == 2) ? inputs[1] : "";
 
         switch (cmd) {
@@ -79,6 +95,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the input string and constructs a {@link Deadline} task.
+     * The expected format is:
+     * {@code deadline [task name] /by [YYYY-MM-DD HH:MM]}.
+     *
+     * @param args User input containing the deadline description.
+     * @return A Deadline task created from the input.
+     * @throws OrbitException If the input format or date/time is invalid.
+     */
     public static Deadline parseDeadline(String args) throws OrbitException {
         try {
             if (args == null || args.trim().isEmpty()) {
@@ -99,6 +124,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the input string and constructs an {@link Event} task.
+     * The expected format is:
+     * {@code event [task name] /from [YYYY-MM-DD HH:MM] /to [YYYY-MM-DD HH:MM]}.
+     *
+     * @param args User input containing the event description.
+     * @return An Event task created from the input.
+     * @throws OrbitException If the input format or date/time is invalid.
+     */
     public static Event parseEvent(String args) throws OrbitException {
         try {
             if (args == null || args.trim().isEmpty()) {
@@ -133,6 +167,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the input string and constructs a {@link ToDo} task.
+     *
+     * @param args User input containing the to-do description.
+     * @return A ToDo task created from the input.
+     * @throws OrbitException If the task description is empty.
+     */
     public static ToDo parseTodo(String args) throws OrbitException {
         if (args == null || args.trim().isEmpty()) {
             throw new OrbitException("Invalid todo task. Please include task name.");
@@ -140,10 +181,24 @@ public class Parser {
         return new ToDo(args.trim());
     }
 
+    /**
+     * Parses a date-time string into a {@link LocalDateTime} object.
+     * The expected format is {@code yyyy-MM-dd HH:mm}.
+     *
+     * @param dateTime Date-time string to parse.
+     * @return Parsed LocalDateTime object.
+     * @throws DateTimeParseException If the format is invalid.
+     */
     public static LocalDateTime parseDateTime(String dateTime) {
         return LocalDateTime.parse(dateTime.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 
+    /**
+     * Formats a {@link LocalDateTime} into a user-friendly display string.
+     *
+     * @param dateTime Date-time to format.
+     * @return Formatted date-time string.
+     */
     public static String displayDateTime(LocalDateTime dateTime) {
         return dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy hh:mma"));
     }

@@ -2,3 +2,4 @@ T | 0 | get fired
 D | 1 | assignment | 2026-12-30T23:59
 E | 0 | deadline concert | 2025-12-20T20:00 | 2025-12-20T22:00
 T | 1 | sleep
+T | 1 | draw 豚豚

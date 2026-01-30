@@ -4,10 +4,20 @@ import orbit.parser.Parser;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a task that occurs within a specific time period.
+ */
 public class Event extends Task {
     protected LocalDateTime endDate;
     protected LocalDateTime startDate;
 
+    /**
+     * Constructs an Event task.
+     *
+     * @param description Description of the event.
+     * @param startDate Start date and time.
+     * @param endDate End date and time.
+     */
     public Event(String description, LocalDateTime startDate, LocalDateTime endDate) {
         super(description);
         this.startDate = startDate;

@@ -16,14 +16,28 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.time.LocalDateTime;
 
+/**
+ * Handles loading and saving of task data to persistent storage.
+ */
 public class Storage {
 
     private final File file;
 
+    /**
+     * Constructs a Storage object using the specified file path.
+     *
+     * @param filePath Path to the data file.
+     */
     public Storage(String filePath) {
         this.file = new File(filePath);
     }
 
+    /**
+     * Loads tasks from storage.
+     *
+     * @return A TaskList containing loaded tasks.
+     * @throws OrbitException If loading fails.
+     */
     public TaskList load() throws OrbitException {
         ensureFileExists();
 
@@ -48,6 +62,12 @@ public class Storage {
         return taskList;
     }
 
+    /**
+     * Saves the given task list to storage.
+     *
+     * @param taskList Task list to be saved.
+     * @throws OrbitException If saving fails.
+     */
     public void save(TaskList taskList) throws OrbitException {
         ensureFileExists();
 
@@ -61,6 +81,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Checks if the file exists.
+     * If not, creates new directory and new file.
+     *
+     * @throws OrbitException If saving fails.
+     */
     private void ensureFileExists() throws OrbitException {
         try {
             File parent = file.getParentFile();
@@ -75,6 +101,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Parses file input into task object.
+     *
+     * @param line File input containing task description.
+     * @return Task object.
+     */
     private Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
 
