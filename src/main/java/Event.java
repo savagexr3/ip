@@ -17,4 +17,9 @@ public class Event extends Task {
     public TaskType getTaskType() {
         return TaskType.EVENT;
     }
+
+    @Override
+    public String toFileString() {
+        return "E" + super.toFileString() + " | " + startDate + "-" + endDate;
+    }
 }

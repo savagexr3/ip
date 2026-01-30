@@ -13,4 +13,9 @@ public class ToDo extends Task {
     public TaskType getTaskType() {
         return TaskType.TODO;
     }
+
+    @Override
+    public String toFileString() {
+        return "T" + super.toFileString();
+    }
 }

@@ -1,0 +1,5 @@
+T | 0 | read book
+D | 1 | return book | June 6th
+T | 0 | join sports club
+T | 0 | resign
+D | 1 | blackpink concert | 30 Jan
