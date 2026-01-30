@@ -2,7 +2,6 @@ package orbit.parser;
 
 import orbit.command.Command;
 import orbit.command.CommandType;
-
 import orbit.command.ListCommand;
 import orbit.command.AddDeadlineCommand;
 import orbit.command.AddEventCommand;
