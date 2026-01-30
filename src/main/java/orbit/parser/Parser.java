@@ -75,7 +75,7 @@ public class Parser {
         try {
             return Integer.parseInt(args.trim()) - 1; // convert to 0-based
         } catch (NumberFormatException e) {
-            throw new OrbitException("orbit.task.Task number must be a number.");
+            throw new OrbitException("Task number must be a number.");
         }
     }
 
