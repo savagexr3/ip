@@ -43,7 +43,7 @@ test {
 }
 
 application {
-    mainClass.set("orbit.Orbit")
+    mainClass.set("voy.ui.gui.Launcher")
 }
 
 checkstyle {
@@ -51,8 +51,8 @@ checkstyle {
 }
 
 shadowJar {
-    archiveBaseName = "orbit"
-    archiveFileName = 'orbit.jar'
+    archiveBaseName = "voy"
+    archiveFileName = 'voy.jar'
     archiveClassifier = null
 }
 

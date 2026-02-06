@@ -1,0 +1,49 @@
+.avatar {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 4, 0.2, 0, 1);
+}
+
+.label {
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-background-radius: 1em 1em 0 1em;
+    -fx-border-radius: 1em 1em 0 1em;
+    -fx-border-color: rgba(0, 0, 0, 0.1);
+    -fx-border-width: 1px;
+}
+
+.reply-label {
+    -fx-background-color: #1A4734;
+    -fx-text-fill: white;
+    -fx-background-radius: 1em 1em 1em 0;
+    -fx-border-radius: 1em 1em 1em 0;
+}
+
+.add-label {
+    -fx-background-color: #F9DD9C;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-color: transparent;
+}
+
+.marked-label {
+    -fx-background-color: #418B24;
+    -fx-text-fill: white;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-color: transparent;
+}
+
+.delete-label {
+    -fx-background-color: rgb(38, 75, 150);
+    -fx-text-fill: white;
+}
+
+.error-label {
+    -fx-background-color: rgba(220, 50, 50, 0.9);
+    -fx-text-fill: white;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-color: transparent;
+}
+
+
+
