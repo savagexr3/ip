@@ -1,20 +1,20 @@
 package orbit.storage;
 
-import orbit.exception.OrbitException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
-import orbit.task.TaskList;
-import orbit.task.Task;
-import orbit.task.ToDo;
+import orbit.exception.OrbitException;
 import orbit.task.Deadline;
 import orbit.task.Event;
+import orbit.task.Task;
+import orbit.task.TaskList;
+import orbit.task.ToDo;
 
-import java.io.IOException;
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.time.LocalDateTime;
 
 /**
  * Handles loading and saving of task data to persistent storage.
@@ -114,19 +114,25 @@ public class Storage {
 
         switch (parts[0]) {
         case "T":
-            Task t = new ToDo(parts[2]);
-            if (isDone) t.markAsDone();
-            return t;
+            Task toDo = new ToDo(parts[2]);
+            if (isDone) {
+                toDo.markAsDone();
+            }
+            return toDo;
 
         case "D":
-            Task d = new Deadline(parts[2], LocalDateTime.parse(parts[3]));
-            if (isDone) d.markAsDone();
-            return d;
+            Task deadline = new Deadline(parts[2], LocalDateTime.parse(parts[3]));
+            if (isDone) {
+                deadline.markAsDone();
+            }
+            return deadline;
 
         case "E":
-            Task e = new Event(parts[2], LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
-            if (isDone) e.markAsDone();
-            return e;
+            Task event = new Event(parts[2], LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
+            if (isDone) {
+                event.markAsDone();
+            }
+            return event;
 
         default:
             throw new IllegalArgumentException("Unknown task type");

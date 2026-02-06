@@ -30,15 +30,15 @@ public class MarkCommand implements Command {
      */
     @Override
     public void execute(TaskList tasks, Storage storage) throws OrbitException {
-        Task t;
+        Task task;
         try {
-            t = tasks.getTask(index);
+            task = tasks.getTask(index);
         } catch (IndexOutOfBoundsException e) {
             throw new OrbitException("Invalid task number.");
         }
 
-        t.markAsDone();
-        ConsoleUI.responseBox("Nice! I've marked this task as done:\n  " + t);
+        task.markAsDone();
+        ConsoleUI.responseBox("Nice! I've marked this task as done:\n  " + task);
         storage.save(tasks);
     }
 }

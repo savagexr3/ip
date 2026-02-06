@@ -47,9 +47,9 @@ public class StorageTest {
 
         // Write corrupted content manually
         java.nio.file.Files.writeString(file,
-                "T | 1 | read book\n" +
-                        "THIS IS CORRUPTED\n" +
-                        "T | 0 | write tests\n"
+                "T | 1 | read book\n"
+                        + "THIS IS CORRUPTED\n"
+                        + "T | 0 | write tests\n"
         );
 
         Storage storage = new Storage(file.toString());
