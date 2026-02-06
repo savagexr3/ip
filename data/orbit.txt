@@ -4,3 +4,4 @@ E | 0 | deadline concert | 2025-12-20T20:00 | 2025-12-20T22:00
 T | 1 | sleep
 T | 0 | read book
 E | 1 | book exhibition | 2025-10-05T10:00 | 2025-11-05T10:00
+T | 0 | revise exam

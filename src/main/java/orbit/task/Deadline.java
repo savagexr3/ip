@@ -1,13 +1,12 @@
 package orbit.task;
+import java.time.LocalDateTime;
 
 import orbit.parser.Parser;
-
-import java.time.LocalDateTime;
 
 /**
  * Represents a task with a deadline.
  */
-public class Deadline extends Task{
+public class Deadline extends Task {
     protected LocalDateTime deadline;
 
     /**
@@ -16,14 +15,14 @@ public class Deadline extends Task{
      * @param description Description of the task.
      * @param deadline Deadline date and time.
      */
-    public Deadline(String description,LocalDateTime deadline) {
+    public Deadline(String description, LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
     }
 
     @Override
-    public String toString(){
-            return "[D]" + super.toString() + " (by: " + Parser.displayDateTime(deadline) + ")";
+    public String toString() {
+        return "[D]" + super.toString() + " (by: " + Parser.displayDateTime(deadline) + ")";
     }
 
     @Override

@@ -1,15 +1,15 @@
 package orbit;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import orbit.command.Command;
 import orbit.exception.OrbitException;
 import orbit.parser.Parser;
 import orbit.storage.Storage;
 import orbit.task.TaskList;
 import orbit.ui.ConsoleUI;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
  * Entry point of the Orbit application.
@@ -23,7 +23,7 @@ public class Orbit {
      * @param args Command-line arguments (unused).
      */
     public static void main(String[] args) throws IOException, OrbitException {
-        try{
+        try {
             new Orbit().run();
         } catch (OrbitException e) {
             ConsoleUI.responseBox(e.getMessage());

@@ -1,11 +1,11 @@
 package orbit.command;
 
+import java.util.ArrayList;
+
 import orbit.storage.Storage;
 import orbit.task.Task;
 import orbit.task.TaskList;
 import orbit.ui.ConsoleUI;
-
-import java.util.ArrayList;
 
 /**
  * Represents a command that lists all tasks to the user.

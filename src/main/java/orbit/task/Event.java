@@ -1,8 +1,8 @@
 package orbit.task;
 
-import orbit.parser.Parser;
-
 import java.time.LocalDateTime;
+
+import orbit.parser.Parser;
 
 /**
  * Represents a task that occurs within a specific time period.
@@ -26,7 +26,9 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + Parser.displayDateTime(startDate) + " to: " + Parser.displayDateTime(endDate) + ")";
+        return "[E]" + super.toString()
+                + " (from: " + Parser.displayDateTime(startDate)
+                + " to: " + Parser.displayDateTime(endDate) + ")";
     }
 
     @Override
