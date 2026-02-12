@@ -9,14 +9,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import voy.command.CommandType;
 /**
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
-
-    private final AudioClip sound = new AudioClip(getClass().getResource("/media/sound-effect.mp3").toURI().toString());
+    private MediaPlayer sfx;
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -37,6 +37,8 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        Media media = new Media(getClass().getResource("/media/sound-effect.mp3").toExternalForm());
+        sfx = new MediaPlayer(media);
     }
 
     /** Injects the Orbit instance */
@@ -50,7 +52,8 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
-        sound.play();
+        sfx.stop(); // rewind to start
+        sfx.play();
         String input = userInput.getText();
         String response = voy.getResponse(input);
         CommandType commandType = voy.getCommandType();

@@ -1,4 +1,5 @@
 .root {
+    -main-color: rgba(0,0,0,0.5);
     -fx-background-image: url("../images/background.jpeg");
     -fx-background-size: cover;
     -fx-background-repeat: round;
@@ -32,29 +33,38 @@
     -fx-font-size: 20px;
 }
 
-.scroll-pane {
-    -fx-background-color: rgba(100,100,100,.5);
-}
-
+/* ScrollPane transparent */
 .scroll-pane,
 .scroll-pane .viewport {
     -fx-background-color: transparent;
 }
 
+/* Whole scrollbar transparent */
 .scroll-bar {
-    -fx-font-size: 10px;  /* Change width of scroll bar. */
-    -fx-background-color: main-color;
+    -fx-background-color: transparent;
 }
 
+/* Hide track */
+.scroll-bar .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Thumb */
 .scroll-bar .thumb {
-    -fx-background-color: #006400;
-    -fx-background-radius: 1em;
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-background-radius: 10em;
 }
 
-/* Hides the increment and decrement buttons. */
+/* On hover slightly brighter */
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Hide arrows */
 .scroll-bar .increment-button,
 .scroll-bar .decrement-button {
-    -fx-pref-height: 0;
     -fx-opacity: 0;
+    -fx-pref-height: 0;
 }
 
