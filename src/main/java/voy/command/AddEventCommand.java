@@ -34,7 +34,7 @@ public class AddEventCommand implements Command {
      */
     @Override
     public String execute(TaskList tasks, Storage storage) throws OrbitException {
-        tasks.add(event);
+        tasks.addTask(event);
         storage.save(tasks);
         return UiMessageFormatter.formatTaskAdded(tasks.size(), event.toString());
     }

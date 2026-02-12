@@ -29,12 +29,18 @@ public class ListCommand implements Command {
             return UiMessageFormatter.formatResponse("No tasks yet.");
         }
 
+        StringBuilder sb = getStringBuilder(list);
+        return UiMessageFormatter.formatResponse(sb.toString().trim());
+    }
+
+    private static StringBuilder getStringBuilder(ArrayList<Task> list) {
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
         for (int i = 0; i < list.size(); i++) {
             sb.append(i + 1).append(". ").append(list.get(i)).append("\n");
         }
-        return UiMessageFormatter.formatResponse(sb.toString().trim());
+        return sb;
     }
+
     @Override
     public CommandType getCommandType() {
         return LIST;

@@ -52,7 +52,25 @@ public class TaskList {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
-
+    /**
+     * Add a task to the list.
+     *
+     * @param task A new task.
+     */
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
+    /**
+     * Remove a task from the list.
+     *
+     * @param index Index of the task.
+     * @return Deleted task.
+     */
+    public Task removeTask(int index) {
+        Task task = tasks.get(index);
+        tasks.remove(index);
+        return task;
+    }
     /**
      * Returns a list of tasks whose descriptions contain the specified keyword.
      *
@@ -64,7 +82,6 @@ public class TaskList {
                 .filter(task -> task.getDescription().contains(keyword))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
-
     /**
      * Returns the number of tasks in the list.
      *

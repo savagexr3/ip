@@ -1,7 +1,6 @@
 package voy.task;
 import java.time.LocalDateTime;
-
-import voy.parser.Parser;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a task with a deadline.
@@ -17,12 +16,13 @@ public class Deadline extends Task {
      */
     public Deadline(String description, LocalDateTime deadline) {
         super(description);
+        assert deadline != null : "Deadline datetime must not be null";
         this.deadline = deadline;
     }
 
     @Override
     public String toString() {
-        return "[ 𝐃 ]" + super.toString() + " (by: " + Parser.displayDateTime(deadline) + ")";
+        return "[ 𝐃 ]" + super.toString() + " (by: " + displayDateTime(deadline) + ")";
     }
 
     @Override
@@ -33,5 +33,17 @@ public class Deadline extends Task {
     @Override
     public String toFileString() {
         return "D" + super.toFileString() + " | " + deadline;
+    }
+
+    /**
+     * Formats a {@link LocalDateTime} for display to the user.
+     *
+     * @param dateTime the date-time to format
+     * @return a human-readable date-time string
+     */
+    public static String displayDateTime(LocalDateTime dateTime) {
+        return dateTime.format(
+                DateTimeFormatter.ofPattern("MMM d yyyy hh:mma")
+        );
     }
 }

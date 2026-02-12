@@ -34,17 +34,16 @@ public class DeleteCommand implements Command {
      */
     @Override
     public String execute(TaskList tasks, Storage storage) throws OrbitException {
-        Task t;
         try {
-            t = tasks.getTask(index);
+            assert index >= 0 && index < tasks.size() : "Index should be validated before execute()";
+            Task removedTask = tasks.removeTask(index);
+            storage.save(tasks);
+            return UiMessageFormatter.formatTaskDeleted(tasks.size(), removedTask.toString());
         } catch (IndexOutOfBoundsException e) {
             throw new OrbitException("Invalid task number.");
         }
-
-        tasks.remove(index);
-        storage.save(tasks);
-        return UiMessageFormatter.formatTaskDeleted(tasks.size(), t.toString());
     }
+
     @Override
     public CommandType getCommandType() {
         return DELETE;
