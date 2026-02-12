@@ -29,6 +29,8 @@ public class Storage {
      * @param filePath Path to the data file.
      */
     public Storage(String filePath) {
+        assert filePath != null : "Storage file path must not be null";
+        assert !filePath.isBlank() : "Storage file path must not be blank";
         this.file = new File(filePath);
     }
 
@@ -69,6 +71,8 @@ public class Storage {
      * @throws OrbitException If saving fails.
      */
     public void save(TaskList taskList) throws OrbitException {
+        assert taskList != null : "TaskList must not be null when saving";
+        assert taskList.getTasks() != null : "Internal task list must not be null";
         ensureFileExists();
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
@@ -109,6 +113,7 @@ public class Storage {
      */
     private Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
+        assert parts.length >= 3 : "Corrupted save line: " + line;
 
         boolean isDone = parts[1].equals("1");
 
@@ -121,6 +126,7 @@ public class Storage {
             return toDo;
 
         case "D":
+            assert parts.length == 4 : "Deadline format must have 4 parts";
             Task deadline = new Deadline(parts[2], LocalDateTime.parse(parts[3]));
             if (isDone) {
                 deadline.markAsDone();
@@ -128,6 +134,7 @@ public class Storage {
             return deadline;
 
         case "E":
+            assert parts.length == 5 : "Event format must have 5 parts";
             Task event = new Event(parts[2], LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
             if (isDone) {
                 event.markAsDone();
