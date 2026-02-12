@@ -101,14 +101,13 @@ public class TaskParser {
         String eventName = nameAndFrom[0];
 
         String[] fromAndTo = splitEventTo(nameAndFrom[1]);
-        LocalDateTime start = parseDateTime(fromAndTo[0]);
-        LocalDateTime end = parseDateTime(fromAndTo[1]);
+        LocalDateTime startDateTime = parseDateTime(fromAndTo[0]);
+        LocalDateTime endDateTime = parseDateTime(fromAndTo[1]);
+        assert startDateTime != null : "Start datetime should not be null";
+        assert endDateTime != null : "End datetime should not be null";
+        assert !endDateTime.isBefore(startDateTime) : "Event end must not be before start";
 
-        if (end.isBefore(start)) {
-            throw new OrbitException("Event end time cannot be before start time.");
-        }
-
-        return new Event(eventName, start, end);
+        return new Event(eventName, startDateTime, endDateTime);
     }
 
     /**
