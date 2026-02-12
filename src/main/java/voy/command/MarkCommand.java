@@ -33,16 +33,15 @@ public class MarkCommand implements Command {
      */
     @Override
     public String execute(TaskList tasks, Storage storage) throws OrbitException {
-        Task task;
         try {
-            task = tasks.getTask(index);
+            assert index >= 0 && index < tasks.size() : "Index should be validated before execute()";
+            Task task = tasks.getTask(index);
+            task.markAsDone();
+            storage.save(tasks);
+            return UiMessageFormatter.formatResponse("Nice! I've marked this task as done:\n  " + task);
         } catch (IndexOutOfBoundsException e) {
             throw new OrbitException("Invalid task number.");
         }
-
-        task.markAsDone();
-        storage.save(tasks);
-        return UiMessageFormatter.formatResponse("Nice! I've marked this task as done:\n  " + task);
     }
     @Override
     public CommandType getCommandType() {

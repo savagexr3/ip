@@ -20,6 +20,17 @@ import voy.task.ToDo;
  * Handles loading and saving of task data to persistent storage.
  */
 public class Storage {
+    private static final String DELIMITER_REGEX = " \\| ";
+    private static final String TODO_TYPE = "T";
+    private static final String DEADLINE_TYPE = "D";
+    private static final String EVENT_TYPE = "E";
+
+    private static final int IDX_TYPE = 0;
+    private static final int IDX_DONE = 1;
+    private static final int IDX_DESCRIPTION = 2;
+    private static final int IDX_DEADLINE = 3;
+    private static final int IDX_EVENT_FROM = 3;
+    private static final int IDX_EVENT_TO = 4;
 
     private final File file;
 
@@ -29,6 +40,8 @@ public class Storage {
      * @param filePath Path to the data file.
      */
     public Storage(String filePath) {
+        assert filePath != null : "File path must not be null";
+        assert !filePath.isEmpty() : "File path must not be blank";
         this.file = new File(filePath);
     }
 
@@ -43,23 +56,31 @@ public class Storage {
 
         TaskList taskList = new TaskList();
 
+        loadStorageTask(taskList);
+
+        return taskList;
+    }
+
+    private void loadStorageTask(TaskList taskList) throws OrbitException {
         // always calls br.close() at the end even if an exception occurs to prevent resource leakage
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                try {
-                    Task task = parseTask(line);
-                    taskList.add(task);
-                } catch (Exception e) {
-                    // stretch goal: corrupted line → skip
-                    System.out.println("Skipping corrupted line: " + line);
-                }
+                addTaskToList(line, taskList);
             }
         } catch (IOException e) {
             throw new OrbitException("Error reading save file.");
         }
+    }
 
-        return taskList;
+    private void addTaskToList(String line, TaskList taskList) {
+        try {
+            Task task = parseTask(line);
+            taskList.addTask(task);
+        } catch (Exception e) {
+            // stretch goal: corrupted line → skip
+            System.out.println("Skipping corrupted line: " + line);
+        }
     }
 
     /**
@@ -69,8 +90,14 @@ public class Storage {
      * @throws OrbitException If saving fails.
      */
     public void save(TaskList taskList) throws OrbitException {
+        assert taskList != null : "TaskList must not be null";
+        assert taskList.getTasks() != null : "Internal task list must not be null";
         ensureFileExists();
 
+        saveStorageTask(taskList);
+    }
+
+    private void saveStorageTask(TaskList taskList) throws OrbitException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for (Task task : taskList.getTasks()) {
                 bw.write(task.toFileString());
@@ -108,33 +135,45 @@ public class Storage {
      * @return Task object.
      */
     private Task parseTask(String line) {
-        String[] parts = line.split(" \\| ");
+        assert line != null : "Line from file should not be null";
 
-        boolean isDone = parts[1].equals("1");
+        String[] parts = line.split(DELIMITER_REGEX);
 
-        switch (parts[0]) {
-        case "T":
-            Task toDo = new ToDo(parts[2]);
+        assert parts.length >= 3 : "Saved task line format corrupted: " + line;
+
+        return getTask(parts);
+    }
+
+    private static Task getTask(String[] parts) {
+        boolean isDone = parts[IDX_DONE].equals("1");
+
+        switch (parts[IDX_TYPE]) {
+        case TODO_TYPE:
+            Task toDo = new ToDo(parts[IDX_DESCRIPTION]);
             if (isDone) {
                 toDo.markAsDone();
             }
             return toDo;
 
-        case "D":
-            Task deadline = new Deadline(parts[2], LocalDateTime.parse(parts[3]));
+        case DEADLINE_TYPE:
+            assert parts.length == 4 : "Deadline format should have 4 parts";
+            Task deadline = new Deadline(parts[IDX_DESCRIPTION], LocalDateTime.parse(parts[IDX_DEADLINE]));
             if (isDone) {
                 deadline.markAsDone();
             }
             return deadline;
 
-        case "E":
-            Task event = new Event(parts[2], LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
+        case EVENT_TYPE:
+            assert parts.length == 5 : "Event format should have 5 parts";
+            Task event = new Event(parts[IDX_DESCRIPTION], LocalDateTime.parse(parts[IDX_EVENT_FROM]),
+                    LocalDateTime.parse(parts[IDX_EVENT_TO]));
             if (isDone) {
                 event.markAsDone();
             }
             return event;
 
         default:
+            assert false : "Unrecognized task type: " + parts[1];
             throw new IllegalArgumentException("Unknown task type");
         }
     }

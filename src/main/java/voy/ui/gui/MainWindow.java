@@ -16,7 +16,8 @@ import voy.command.CommandType;
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
-    private MediaPlayer sfx;
+    private Media media = new Media(getClass().getResource("/media/sound-effect.mp3").toExternalForm());
+    private MediaPlayer sfx = new MediaPlayer(media);
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -37,8 +38,6 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
-        Media media = new Media(getClass().getResource("/media/sound-effect.mp3").toExternalForm());
-        sfx = new MediaPlayer(media);
     }
 
     /** Injects the Orbit instance */

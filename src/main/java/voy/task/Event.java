@@ -1,8 +1,7 @@
 package voy.task;
 
 import java.time.LocalDateTime;
-
-import voy.parser.Parser;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a task that occurs within a specific time period.
@@ -20,6 +19,7 @@ public class Event extends Task {
      */
     public Event(String description, LocalDateTime startDate, LocalDateTime endDate) {
         super(description);
+        assert !endDate.isBefore(startDate) : "Event end time must be after start time";
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -27,8 +27,8 @@ public class Event extends Task {
     @Override
     public String toString() {
         return "[ 𝐄 ]" + super.toString()
-                + " (from: " + Parser.displayDateTime(startDate)
-                + " to: " + Parser.displayDateTime(endDate) + ")";
+                + " (from: " + displayDateTime(startDate)
+                + " to: " + displayDateTime(endDate) + ")";
     }
 
     @Override
@@ -39,5 +39,17 @@ public class Event extends Task {
     @Override
     public String toFileString() {
         return "E" + super.toFileString() + " | " + startDate + " | " + endDate;
+    }
+
+    /**
+     * Formats a {@link LocalDateTime} for display to the user.
+     *
+     * @param dateTime the date-time to format
+     * @return a human-readable date-time string
+     */
+    public static String displayDateTime(LocalDateTime dateTime) {
+        return dateTime.format(
+                DateTimeFormatter.ofPattern("MMM d yyyy hh:mma")
+        );
     }
 }

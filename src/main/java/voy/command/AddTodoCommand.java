@@ -34,7 +34,7 @@ public class AddTodoCommand implements Command {
      */
     @Override
     public String execute(TaskList tasks, Storage storage) throws OrbitException {
-        tasks.add(todo);
+        tasks.addTask(todo);
         storage.save(tasks);
         return UiMessageFormatter.formatTaskAdded(tasks.size(), todo.toString());
     }

@@ -33,16 +33,15 @@ public class UnmarkCommand implements Command {
      */
     @Override
     public String execute(TaskList tasks, Storage storage) throws OrbitException {
-        Task t;
         try {
-            t = tasks.getTask(index);
+            assert index >= 0 && index < tasks.size() : "Index should be validated before execute()";
+            Task task = tasks.getTask(index);
+            task.markAsNotDone();
+            storage.save(tasks);
+            return UiMessageFormatter.formatResponse("OK, I've marked this task as not done yet:\n  " + task);
         } catch (IndexOutOfBoundsException e) {
             throw new OrbitException("Invalid task number.");
         }
-
-        t.markAsNotDone();
-        storage.save(tasks);
-        return UiMessageFormatter.formatResponse("OK, I've marked this task as not done yet:\n  " + t);
     }
     @Override
     public CommandType getCommandType() {

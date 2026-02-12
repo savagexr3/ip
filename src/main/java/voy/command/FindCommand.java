@@ -43,15 +43,20 @@ public class FindCommand implements Command {
                     "No tasks found with keyword \"" + keyword.toUpperCase() + "\"."
             );
         }
+        StringBuilder sb = getStringBuilder(list);
+        return UiMessageFormatter.formatResponse(sb.toString().trim());
+    }
 
+    private StringBuilder getStringBuilder(ArrayList<Task> list) {
         StringBuilder sb = new StringBuilder(
                 "Here are the tasks with keyword \"" + keyword.toUpperCase() + "\" in your list:\n"
         );
         for (int i = 0; i < list.size(); i++) {
             sb.append(i + 1).append(". ").append(list.get(i)).append("\n");
         }
-        return UiMessageFormatter.formatResponse(sb.toString().trim());
+        return sb;
     }
+
     @Override
     public CommandType getCommandType() {
         return FIND;

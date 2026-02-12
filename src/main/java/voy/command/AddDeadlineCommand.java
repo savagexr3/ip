@@ -34,7 +34,7 @@ public class AddDeadlineCommand implements Command {
      */
     @Override
     public String execute(TaskList tasks, Storage storage) throws OrbitException {
-        tasks.add(deadline);
+        tasks.addTask(deadline);
         storage.save(tasks);
         return UiMessageFormatter.formatTaskAdded(tasks.size(), deadline.toString());
     }
