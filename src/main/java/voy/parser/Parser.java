@@ -186,6 +186,9 @@ public class Parser {
 
             LocalDateTime startDateTime = parseDateTime(toSplit[0]);
             LocalDateTime endDateTime = parseDateTime(toSplit[1]);
+            assert startDateTime != null : "Start datetime should not be null";
+            assert endDateTime != null : "End datetime should not be null";
+            assert !endDateTime.isBefore(startDateTime) : "Event end must not be before start";
             return new Event(eventName, startDateTime, endDateTime);
         } catch (DateTimeParseException e) {
             throw new OrbitException(
