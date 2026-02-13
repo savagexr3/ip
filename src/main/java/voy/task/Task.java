@@ -1,5 +1,7 @@
 package voy.task;
 
+import java.time.LocalDateTime;
+
 /**
  * Represents a generic task in the Orbit application.
  * A task has a description, completion status, and a task type.
@@ -25,7 +27,7 @@ public class Task {
      * @return "X" if the task is completed, otherwise a blank space.
      */
     public String getStatusIcon() {
-        return isDone ? "❌" : "✅";
+        return isDone ? "✅" : "❌";
     }
 
     /**
@@ -86,5 +88,13 @@ public class Task {
      */
     public String toFileString() {
         return " | " + (isDone ? "1" : "0") + " | " + description;
+    }
+
+    public LocalDateTime getEndDate() {
+        return null;
+    }
+
+    public LocalDateTime getStartDate() {
+        return null;
     }
 }

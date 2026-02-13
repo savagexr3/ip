@@ -1,7 +1,8 @@
-D | 1 | assignment | 2026-12-30T23:59
-E | 0 | deadline concert | 2025-12-20T20:00 | 2025-12-20T22:00
-T | 1 | sleep
+E | 0 | morning meeting | 2026-02-13T09:30 | 2026-02-13T11:00
+E | 0 | lunch | 2026-02-13T12:00 | 2026-02-13T13:00
+E | 0 | project work | 2026-02-13T14:00 | 2026-02-13T18:00
+E | 1 | dinner | 2026-02-13T19:00 | 2026-02-13T21:00
+E | 0 | full day event | 2026-02-14T09:00 | 2026-02-14T22:00
+E | 0 | short meeting | 2026-02-15T10:00 | 2026-02-15T11:00
 T | 0 | read book
-E | 1 | book exhibition | 2025-10-05T10:00 | 2025-11-05T10:00
-D | 1 | watch drama | 2029-03-09T13:00
-D | 0 | buy ipad | 2026-02-07T16:00
+D | 0 | submit report | 2026-02-20T23:59

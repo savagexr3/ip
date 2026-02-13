@@ -175,4 +175,47 @@ public class TaskParser {
 
         return new String[] { parts[0].trim(), parts[1].trim() };
     }
+    /**
+     * Parses the FREE command duration argument.
+     *
+     * <p>
+     * Supported formats:
+     * <ul>
+     *     <li>{@code 2h} - 2 hours</li>
+     *     <li>{@code 90m} - 90 minutes</li>
+     * </ul>
+     *
+     * @param freeTime raw duration string
+     * @return duration in minutes
+     * @throws OrbitException if format is invalid
+     */
+    public static long parseFreeTime(String freeTime) throws OrbitException {
+        if (freeTime == null || freeTime.trim().isEmpty()) {
+            throw new OrbitException(
+                    "Invalid free time. Use format: 2h or 90m."
+            );
+        }
+
+        String trimmed = freeTime.trim().toLowerCase();
+
+        try {
+            if (trimmed.endsWith("h")) {
+                long hours = Long.parseLong(trimmed.substring(0, trimmed.length() - 1));
+                return hours * 60;
+            }
+
+            if (trimmed.endsWith("m")) {
+                return Long.parseLong(trimmed.substring(0, trimmed.length() - 1));
+            }
+
+            // default: treat as hours
+            long hours = Long.parseLong(trimmed);
+            return hours * 60;
+
+        } catch (NumberFormatException e) {
+            throw new OrbitException(
+                    "Invalid free time format. Use 2h or 90m."
+            );
+        }
+    }
 }
