@@ -8,6 +8,7 @@ import voy.command.Command;
 import voy.command.CommandType;
 import voy.command.DeleteCommand;
 import voy.command.FindCommand;
+import voy.command.FreeCommand;
 import voy.command.ListCommand;
 import voy.command.MarkCommand;
 import voy.command.UnmarkCommand;
@@ -74,6 +75,8 @@ public class Parser {
             return new AddEventCommand(TaskParser.parseEvent(args));
         case FIND:
             return new FindCommand(args);
+        case FREE:
+            return new FreeCommand(TaskParser.parseFreeTime(args));
         default:
             throw new OrbitException("Invalid command type.");
         }

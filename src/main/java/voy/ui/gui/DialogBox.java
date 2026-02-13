@@ -62,6 +62,8 @@ public class DialogBox extends HBox {
         case EVENT:
             dialog.getStyleClass().add("add-label");
             break;
+        case LIST:
+            break;
         case MARK:
         case UNMARK:
             dialog.getStyleClass().add("marked-label");
@@ -69,10 +71,20 @@ public class DialogBox extends HBox {
         case DELETE:
             dialog.getStyleClass().add("delete-label");
             break;
+        case FIND:
+            dialog.getStyleClass().add("find-label");
+            break;
+        case BYE:
+            dialog.getStyleClass().add("bye-label");
+            break;
+        case FREE:
+            dialog.getStyleClass().add("free-label");
+            break;
         case ERROR:
             dialog.getStyleClass().add("error-label");
             break;
-        default: // do nothing
+        default:
+            dialog.getStyleClass().add("label");
         }
     }
 

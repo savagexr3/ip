@@ -3,8 +3,6 @@ package voy.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import voy.parser.Parser;
-
 /**
  * Represents a task that occurs within a specific time period.
  */
@@ -55,5 +53,13 @@ public class Event extends Task {
         return dateTime.format(
                 DateTimeFormatter.ofPattern("MMM d yyyy hh:mma")
         );
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
     }
 }

@@ -13,5 +13,6 @@ public enum CommandType {
     EVENT,
     FIND,
     BYE,
+    FREE,
     ERROR
 }

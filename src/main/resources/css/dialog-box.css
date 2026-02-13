@@ -10,6 +10,7 @@
     -fx-border-width: 1px;
 }
 
+/* Assistant reply bubble */
 .reply-label {
     -fx-background-color: #1A4734;
     -fx-text-fill: white;
@@ -17,33 +18,73 @@
     -fx-border-radius: 1em 1em 1em 0;
 }
 
+
+/* Add command */
 .add-label {
-    -fx-background-color: #F9DD9C;
+    -fx-background-color: #F4C95D; /* softer gold */
+    -fx-text-fill: #2C2C2C;
     -fx-background-radius: 1em;
     -fx-border-radius: 1em;
     -fx-border-color: transparent;
 }
 
+
+/* Mark command */
 .marked-label {
-    -fx-background-color: #418B24;
+    -fx-background-color: #2E8B57; /* emerald */
     -fx-text-fill: white;
     -fx-background-radius: 1em;
     -fx-border-radius: 1em;
     -fx-border-color: transparent;
 }
 
+
+/* Delete command */
 .delete-label {
-    -fx-background-color: rgb(38, 75, 150);
+    -fx-background-color: #B23A48; /* muted red */
     -fx-text-fill: white;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
 }
 
+
+/* Error */
 .error-label {
-    -fx-background-color: rgba(220, 50, 50, 0.9);
+    -fx-background-color: #8B0000; /* deeper red */
     -fx-text-fill: white;
     -fx-background-radius: 1em;
     -fx-border-radius: 1em;
     -fx-border-color: transparent;
 }
+
+
+/* Free command */
+.free-label {
+    -fx-background-color: #3A7CA5; /* calm blue */
+    -fx-text-fill: white;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+}
+
+
+/* List command */
+.list-label {
+    -fx-background-color: #E6F0FA; /* light slate blue */
+    -fx-text-fill: #1A1A1A;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-color: rgba(0,0,0,0.08);
+}
+
+
+/* Bye command */
+.bye-label {
+    -fx-background-color: #6C5B7B; /* muted purple */
+    -fx-text-fill: white;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+}
+
 
 
 
