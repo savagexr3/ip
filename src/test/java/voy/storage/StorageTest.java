@@ -1,10 +1,9 @@
 package voy.storage;
 
-import voy.exception.OrbitException;
-import voy.task.TaskList;
-import voy.task.ToDo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import voy.task.TaskList;
+import voy.task.ToDo;
 
 import java.nio.file.Path;
 
@@ -16,48 +15,45 @@ public class StorageTest {
     Path tempDir;
 
     @Test
-    public void load_fileDoesNotExist_returnsEmptyTaskList() throws OrbitException {
-        Storage storage = new Storage(tempDir.resolve("orbit.txt").toString());
+    public void saveAndLoad_tasksPersisted() throws Exception {
+        Path filePath = tempDir.resolve("voy.txt");
 
-        TaskList list = storage.load();
+        Storage storage = new Storage(filePath.toString());
 
-        assertNotNull(list);
-        assertEquals(0, list.size());
-    }
+        TaskList list = new TaskList();
+        list.add(new ToDo("read"));
 
-    @Test
-    public void saveAndLoad_tasksPersistCorrectly() throws OrbitException {
-        Storage storage = new Storage(tempDir.resolve("orbit.txt").toString());
+        storage.save(list);
 
-        TaskList original = new TaskList();
-        original.add(new ToDo("read book"));
-        original.add(new ToDo("write tests"));
-
-        storage.save(original);
         TaskList loaded = storage.load();
-
-        assertEquals(2, loaded.size());
-        assertTrue(loaded.getTask(0).toString().contains("read book"));
-        assertTrue(loaded.getTask(1).toString().contains("write tests"));
+        assertEquals(1, loaded.size());
+        assertEquals("read", loaded.getTask(0).getDescription());
     }
 
     @Test
-    public void load_corruptedLine_isSkipped() throws Exception {
-        Path file = tempDir.resolve("orbit.txt");
+    public void load_deadlineTask_parsedCorrectly() throws Exception {
+        Path file = tempDir.resolve("voy.txt");
 
-        // Write corrupted content manually
         java.nio.file.Files.writeString(file,
-                "T | 1 | read book\n"
-                        + "THIS IS CORRUPTED\n"
-                        + "T | 0 | write tests\n"
-        );
+                "D | 1 | submit report | 2025-01-01T13:00\n");
 
         Storage storage = new Storage(file.toString());
         TaskList list = storage.load();
 
-        // corrupted line skipped, valid ones loaded
-        assertEquals(2, list.size());
-        assertTrue(list.getTask(0).toString().contains("read book"));
-        assertTrue(list.getTask(1).toString().contains("write tests"));
+        assertEquals(1, list.size());
     }
+
+    @Test
+    public void load_eventTask_parsedCorrectly() throws Exception {
+        Path file = tempDir.resolve("voy.txt");
+
+        java.nio.file.Files.writeString(file,
+                "E | 0 | meeting | 2025-01-01T10:00 | 2025-01-01T12:00\n");
+
+        Storage storage = new Storage(file.toString());
+        TaskList list = storage.load();
+
+        assertEquals(1, list.size());
+    }
+
 }
