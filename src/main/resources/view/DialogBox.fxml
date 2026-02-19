@@ -4,24 +4,45 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<fx:root alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" stylesheets="@../css/dialog-box.css" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="TOP_RIGHT"
+         prefWidth="400.0"
+         stylesheets="@../css/dialog-box.css"
+         type="javafx.scene.layout.HBox"
+         xmlns="http://javafx.com/javafx/17"
+         xmlns:fx="http://javafx.com/fxml/1">
+
     <children>
-        <Label fx:id="dialog" minHeight="-Infinity" text="Label" wrapText="true">
-         <padding>
-            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
-         </padding>
-         <HBox.margin>
-            <Insets left="7.0" right="7.0" />
-         </HBox.margin></Label>
+
+        <!-- Bubble -->
+        <VBox fx:id="bubble" spacing="3" alignment="BOTTOM_RIGHT">
+            <Label fx:id="dialog" wrapText="true" styleClass="label" >
+                <padding>
+                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                </padding>
+            </Label>
+
+            <Label fx:id="timestamp" styleClass="time-label"/>
+        </VBox>
+
+        <!-- Avatar -->
         <ImageView fx:id="avatar"
                    styleClass="avatar"
-                   fitWidth="60" fitHeight="60"
+                   fitWidth="50"
+                   fitHeight="50"
                    preserveRatio="true"
-                   pickOnBounds="true"/>
+                   pickOnBounds="true">
+            <HBox.margin>
+                <Insets left="6.0" right="6.0"/>
+            </HBox.margin>
+        </ImageView>
 
     </children>
+
+
     <padding>
-        <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+        <Insets bottom="15.0" left="5.0" right="5.0" top="15.0"/>
     </padding>
 </fx:root>
+

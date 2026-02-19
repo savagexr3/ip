@@ -1,6 +1,8 @@
 package voy.ui.gui;
 
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
 import javafx.collections.FXCollections;
@@ -14,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
 import voy.command.CommandType;
 
 /**
@@ -21,9 +24,10 @@ import voy.command.CommandType;
  * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
-    @FXML
-    private Label dialog;
+    @FXML private Label dialog;
     @FXML private ImageView avatar;
+    @FXML private Label timestamp;
+
 
     private DialogBox(String text, Image img) {
         try {
@@ -36,6 +40,10 @@ public class DialogBox extends HBox {
         }
 
         dialog.setText(text);
+        dialog.setWrapText(true);
+        dialog.maxWidthProperty().bind(this.widthProperty().multiply(0.65));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        timestamp.setText(LocalTime.now().format(formatter));
         avatar.setImage(img);
         makeAvatarCircular();
     }
@@ -63,6 +71,7 @@ public class DialogBox extends HBox {
             dialog.getStyleClass().add("add-label");
             break;
         case LIST:
+            dialog.getStyleClass().add("list-label");
             break;
         case MARK:
         case UNMARK:
@@ -82,6 +91,9 @@ public class DialogBox extends HBox {
             break;
         case ERROR:
             dialog.getStyleClass().add("error-label");
+            break;
+        case GREET:
+            dialog.getStyleClass().add("reply-label");
             break;
         default:
             dialog.getStyleClass().add("label");

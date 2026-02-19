@@ -48,7 +48,7 @@ public class Voy {
             return response;
         } catch (OrbitException e) {
             lastCommandType = CommandType.ERROR;
-            return e.getMessage();
+            return "⚠ " + e.getMessage() + "\nTip: check command format!";
         }
     }
 

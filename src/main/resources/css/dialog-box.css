@@ -1,90 +1,118 @@
 .avatar {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 4, 0.2, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.22), 5, 0.18, 0, 1);
 }
 
+/* Base bubble style (shared) */
 .label {
-    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-background-color: rgba(255, 255, 255, 0.82);
+    -fx-text-fill: #22302A;
     -fx-background-radius: 1em 1em 0 1em;
     -fx-border-radius: 1em 1em 0 1em;
-    -fx-border-color: rgba(0, 0, 0, 0.1);
+    -fx-border-color: rgba(0, 0, 0, 0.08);
     -fx-border-width: 1px;
 }
 
-/* Assistant reply bubble */
+/* Assistant reply bubble (dark but softened) */
 .reply-label {
-    -fx-background-color: #1A4734;
+    -fx-background-color: rgba(26, 71, 52, 0.86);
     -fx-text-fill: white;
     -fx-background-radius: 1em 1em 1em 0;
     -fx-border-radius: 1em 1em 1em 0;
+    -fx-border-color: rgba(0, 0, 0, 0.10);
 }
 
-
-/* Add command */
+/* Add command (warm gold, slightly translucent) */
 .add-label {
-    -fx-background-color: #F4C95D; /* softer gold */
+    -fx-background-color: rgba(244, 201, 93, 0.92);
     -fx-text-fill: #2C2C2C;
     -fx-background-radius: 1em;
     -fx-border-radius: 1em;
-    -fx-border-color: transparent;
+    -fx-border-color: rgba(0,0,0,0.06);
 }
 
-
-/* Mark command */
+/* Mark command (muted green, less neon) */
 .marked-label {
-    -fx-background-color: #2E8B57; /* emerald */
+    -fx-background-color: rgba(46, 139, 87, 0.88);
     -fx-text-fill: white;
-    -fx-background-radius: 1em;
-    -fx-border-radius: 1em;
-    -fx-border-color: transparent;
-}
-
-
-/* Delete command */
-.delete-label {
-    -fx-background-color: #B23A48; /* muted red */
-    -fx-text-fill: white;
-    -fx-background-radius: 1em;
-    -fx-border-radius: 1em;
-}
-
-
-/* Error */
-.error-label {
-    -fx-background-color: #8B0000; /* deeper red */
-    -fx-text-fill: white;
-    -fx-background-radius: 1em;
-    -fx-border-radius: 1em;
-    -fx-border-color: transparent;
-}
-
-
-/* Free command */
-.free-label {
-    -fx-background-color: #3A7CA5; /* calm blue */
-    -fx-text-fill: white;
-    -fx-background-radius: 1em;
-    -fx-border-radius: 1em;
-}
-
-
-/* List command */
-.list-label {
-    -fx-background-color: #E6F0FA; /* light slate blue */
-    -fx-text-fill: #1A1A1A;
     -fx-background-radius: 1em;
     -fx-border-radius: 1em;
     -fx-border-color: rgba(0,0,0,0.08);
 }
 
-
-/* Bye command */
-.bye-label {
-    -fx-background-color: #6C5B7B; /* muted purple */
+/* Delete command (muted red, less harsh) */
+.delete-label {
+    -fx-background-color: rgba(178, 58, 72, 0.88);
     -fx-text-fill: white;
     -fx-background-radius: 1em;
     -fx-border-radius: 1em;
+    -fx-border-color: rgba(0,0,0,0.08);
 }
 
+/* Error (same family as delete but slightly deeper) */
+.error-label {
+    -fx-background-color: rgba(148, 34, 48, 0.92);
+    -fx-text-fill: white;
+    -fx-border-width: 1px;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-color: rgba(0,0,0,0.10);
+}
 
+/* Free command (muted blue-green instead of strong blue) */
+.free-label {
+    -fx-background-color: rgba(58, 124, 165, 0.88);
+    -fx-text-fill: white;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-color: rgba(0,0,0,0.08);
+}
 
+/* List command (same “glass” softness as label) */
+.list-label {
+    -fx-background-color: rgba(235, 245, 240, 0.88);
+    -fx-text-fill: #24352C;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-color: rgba(0,0,0,0.07);
+    -fx-font-size: 12.5px;
+    -fx-line-spacing: 3px;
+}
 
+/* Bye command (muted purple, softened) */
+.bye-label {
+    -fx-background-color: rgba(108, 91, 123, 0.88);
+    -fx-text-fill: white;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-color: rgba(0,0,0,0.08);
+}
+
+.label,
+.reply-label,
+.add-label,
+.marked-label,
+.delete-label,
+.error-label,
+.free-label,
+.list-label,
+.bye-label {
+    -fx-padding: 8px 10px 8px 10px;
+    -fx-font-size: 13px;
+}
+
+.time-label {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 10px;
+    -fx-text-fill: rgba(0, 0, 0, 0.4);
+    -fx-padding: 2 8 0 8;
+}
+
+.reply-label + .time-label,
+.error-label + .time-label,
+.delete-label + .time-label,
+.marked-label + .time-label,
+.free-label + .time-label,
+.bye-label + .time-label {
+    -fx-text-fill: rgba(255,255,255,0.6);
+}

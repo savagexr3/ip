@@ -1,5 +1,7 @@
 package voy.ui.gui;
 
+import static voy.command.CommandType.GREET;
+
 import java.net.URISyntaxException;
 
 import javafx.fxml.FXML;
@@ -35,9 +37,17 @@ public class MainWindow extends AnchorPane {
     public MainWindow() throws URISyntaxException {
     }
 
+    /**
+     * Initializes the Main Window UI.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        dialogContainer.getChildren().add(
+                DialogBox.getVoyDialog("Hello! I'm Voy 🌊 "
+                                + "How can I help you today?\nType \"list\" to start!",
+                        voyImage, GREET)
+        );
     }
 
     /** Injects the Orbit instance */

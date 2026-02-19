@@ -6,3 +6,5 @@ E | 0 | full day event | 2026-02-14T09:00 | 2026-02-14T22:00
 E | 0 | short meeting | 2026-02-15T10:00 | 2026-02-15T11:00
 T | 0 | read book
 D | 0 | submit report | 2026-02-20T23:59
+T | 0 | celebrate cny
+D | 0 | blackpink | 2026-02-28T16:00

@@ -14,5 +14,6 @@ public enum CommandType {
     FIND,
     BYE,
     FREE,
+    GREET,
     ERROR
 }
