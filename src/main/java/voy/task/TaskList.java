@@ -79,7 +79,7 @@ public class TaskList {
      */
     public ArrayList<Task> filter(String keyword) {
         return tasks.stream()
-                .filter(task -> task.getDescription().contains(keyword))
+                .filter(task -> task.getDescription().toUpperCase().contains(keyword.toUpperCase()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     /**

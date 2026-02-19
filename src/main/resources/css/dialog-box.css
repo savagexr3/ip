@@ -107,12 +107,3 @@
     -fx-text-fill: rgba(0, 0, 0, 0.4);
     -fx-padding: 2 8 0 8;
 }
-
-.reply-label + .time-label,
-.error-label + .time-label,
-.delete-label + .time-label,
-.marked-label + .time-label,
-.free-label + .time-label,
-.bye-label + .time-label {
-    -fx-text-fill: rgba(255,255,255,0.6);
-}

@@ -1,10 +1,6 @@
-E | 0 | morning meeting | 2026-02-13T09:30 | 2026-02-13T11:00
-E | 0 | lunch | 2026-02-13T12:00 | 2026-02-13T13:00
-E | 0 | project work | 2026-02-13T14:00 | 2026-02-13T18:00
-E | 1 | dinner | 2026-02-13T19:00 | 2026-02-13T21:00
-E | 0 | full day event | 2026-02-14T09:00 | 2026-02-14T22:00
-E | 0 | short meeting | 2026-02-15T10:00 | 2026-02-15T11:00
+T | 1 | buy milk
+D | 1 | submit report | 2026-03-12T14:30
+E | 0 | meeting | 2026-08-31T14:00 | 2026-09-02T08:00
 T | 0 | read book
-D | 0 | submit report | 2026-02-20T23:59
-T | 0 | celebrate cny
-D | 1 | blackpink | 2026-02-28T16:00
+D | 0 | CS2103 iP | 2026-02-19T12:00
+E | 0 | celebrate Chinese New Year | 2026-02-17T00:00 | 2026-02-18T23:59

@@ -1,9 +1,11 @@
 package voy.ui.gui;
 
+import static voy.command.CommandType.BYE;
 import static voy.command.CommandType.GREET;
 
 import java.net.URISyntaxException;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -71,6 +73,9 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getVoyDialog(response, voyImage, commandType)
         );
+        if (commandType == CommandType.BYE) {
+            Platform.exit();
+        }
         userInput.clear();
     }
 }
