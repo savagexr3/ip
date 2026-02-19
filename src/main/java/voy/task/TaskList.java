@@ -53,7 +53,7 @@ public class TaskList {
         return tasks;
     }
     /**
-     * Add a task to the list.
+     * Adds a task to the list.
      *
      * @param task A new task.
      */
@@ -61,7 +61,7 @@ public class TaskList {
         tasks.add(task);
     }
     /**
-     * Remove a task from the list.
+     * Removes a task from the list.
      *
      * @param index Index of the task.
      * @return Deleted task.

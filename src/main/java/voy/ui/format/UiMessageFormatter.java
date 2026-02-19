@@ -18,16 +18,6 @@ public class UiMessageFormatter {
     /** Horizontal separator used to visually group console output. */
     private static final String LINE_SEPARATOR =
             "──────────────────────────────────────────────────────────────────";
-
-    /** Flag to enable or disable ANSI color output. */
-    private static final boolean USE_COLOR = false; // false when redirected
-
-    /** ANSI escape sequence to reset console color formatting. */
-    private static final String ANSI_RESET = USE_COLOR ? "\u001B[0m" : "";
-
-    /** ANSI escape sequence for blue-colored text. */
-    private static final String ANSI_BLUE = USE_COLOR ? "\u001B[34m" : "";
-
     /**
      * Displays the Voy welcome banner and greeting message.
      * <p>
@@ -58,7 +48,7 @@ public class UiMessageFormatter {
 
         for (String block : input) {
             for (String line : block.split("\n")) {
-                sb.append(ANSI_BLUE).append(" ").append(line).append(ANSI_RESET).append("\n");
+                sb.append(" ").append(line).append("\n");
             }
         }
 
@@ -78,7 +68,7 @@ public class UiMessageFormatter {
 
         for (String block : input) {
             for (String line : block.split("\n")) {
-                sb.append(ANSI_BLUE).append(" ").append(line).append(ANSI_RESET).append("\n");
+                sb.append(" ").append(line).append("\n");
             }
         }
 
@@ -100,7 +90,7 @@ public class UiMessageFormatter {
 
         for (String block : input) {
             for (String line : block.split("\n")) {
-                sb.append(ANSI_BLUE).append(" ").append(line).append(ANSI_RESET).append("\n");
+                sb.append(" ").append(line).append("\n");
             }
         }
 
