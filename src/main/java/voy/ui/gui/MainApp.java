@@ -34,7 +34,8 @@ public class MainApp extends Application {
             AnchorPane root = loader.load();
 
             stage.setTitle("Voy");
-
+            stage.setMinWidth(400);
+            stage.setMinHeight(600);
             Image image = new Image("/images/icon.jpeg");
             stage.getIcons().add(image);
 
