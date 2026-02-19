@@ -23,7 +23,7 @@ public class ByeCommand implements Command {
     @Override
     public String execute(TaskList tasks, Storage storage) throws OrbitException {
         storage.save(tasks);
-        return UiMessageFormatter.formatResponse("Bye. Hope to see you again soon!");
+        return UiMessageFormatter.formatResponse("Bye! See you soon 👋");
     }
 
     /**

@@ -38,7 +38,8 @@ public class MarkCommand implements Command {
             Task task = tasks.getTask(index);
             task.markAsDone();
             storage.save(tasks);
-            return UiMessageFormatter.formatResponse("🌊That wave has settled. Well done!\nI've marked this task as done:\n  " + task);
+            return UiMessageFormatter.formatResponse("🌊That wave has settled. "
+                    + "Well done!\nI've marked this task as done:\n  " + task);
         } catch (IndexOutOfBoundsException e) {
             throw new OrbitException("Invalid task number.");
         }

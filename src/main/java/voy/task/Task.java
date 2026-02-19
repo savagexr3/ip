@@ -27,7 +27,7 @@ public class Task {
      * @return "X" if the task is completed, otherwise a blank space.
      */
     public String getStatusIcon() {
-        return isDone ? "✅" : "❌";
+        return isDone ? " ✅" : " ❌";
     }
 
     /**

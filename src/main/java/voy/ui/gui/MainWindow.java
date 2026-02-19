@@ -1,10 +1,10 @@
 package voy.ui.gui;
 
-import static voy.command.CommandType.BYE;
 import static voy.command.CommandType.GREET;
 
 import java.net.URISyntaxException;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import voy.command.CommandType;
 /**
  * Controller for the main GUI.
@@ -74,7 +75,9 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getVoyDialog(response, voyImage, commandType)
         );
         if (commandType == CommandType.BYE) {
-            Platform.exit();
+            PauseTransition delay = new PauseTransition(Duration.seconds(2));
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
         }
         userInput.clear();
     }

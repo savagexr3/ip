@@ -52,7 +52,8 @@ public class Parser {
             return CommandType.valueOf(keyword.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new OrbitException(
-                    "Unknown command: \"" + keyword + "\". \nTry: list, todo, deadline, event, mark, unmark, delete, find, free, bye."
+                    "Unknown command: \"" + keyword + "\". \nTry: "
+                            + "list, todo, deadline, event, mark, unmark, delete, find, free, bye."
             );
         }
     }

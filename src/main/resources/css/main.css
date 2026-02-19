@@ -4,6 +4,8 @@
     -fx-background-size: cover;
     -fx-background-repeat: round;
     -fx-background-color: rgba(0,0,0,0.5);
+    -fx-font-family: system;
+    -fx-font-size: 14px;
 }
 
 
@@ -11,7 +13,7 @@
     -fx-background-color: rgba(255,255,255,.5);
     -fx-background-radius: 20;
     -fx-border-color: transparent;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
     -fx-prompt-text-fill: #aaaaaa;
