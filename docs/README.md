@@ -1,3 +1,20 @@
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Features](#features)
+    - [1. Adding a ToDo](#1-adding-a-todo)
+    - [2. Adding a Deadline](#2-adding-a-deadline)
+    - [3. Adding an Event](#3-adding-an-event)
+    - [4. Listing All Tasks](#4-listing-all-tasks)
+    - [5. Marking a Task as Done](#5-marking-a-task-as-done)
+    - [6. Unmarking a Task](#6-unmarking-a-task)
+    - [7. Finding Tasks](#7-finding-tasks)
+    - [8. Finding Free Time](#8-finding-free-time)
+    - [10. Exiting the Application](#10-exiting-the-application)
+- [Command Summary](#command-summary)
+
+---
+
 # Voy 🌊
 
 *A calm and aesthetic task manager built with Java and JavaFX with theme of drama 赴山海.*
@@ -197,7 +214,7 @@ Displays available one-hour free slots.
 
 ---
 
-## 10. Exiting the Application
+## 9. Exiting the Application
 
 Closes Voy after displaying a farewell message.
 
