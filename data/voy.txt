@@ -7,4 +7,4 @@ E | 0 | short meeting | 2026-02-15T10:00 | 2026-02-15T11:00
 T | 0 | read book
 D | 0 | submit report | 2026-02-20T23:59
 T | 0 | celebrate cny
-D | 0 | blackpink | 2026-02-28T16:00
+D | 1 | blackpink | 2026-02-28T16:00

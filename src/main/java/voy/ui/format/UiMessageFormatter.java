@@ -64,7 +64,7 @@ public class UiMessageFormatter {
      */
     public static String formatTaskAdded(int size, String... input) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Got it. I've added this task:\n");
+        sb.append("🌊The tide remembers this task now:\n");
 
         for (String block : input) {
             for (String line : block.split("\n")) {
@@ -86,7 +86,7 @@ public class UiMessageFormatter {
      */
     public static String formatTaskDeleted(int size, String... input) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Noted. I've removed this task:\n");
+        sb.append("🌊I've let that drift away:\n");
 
         for (String block : input) {
             for (String line : block.split("\n")) {
