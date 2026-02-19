@@ -3,6 +3,7 @@ package voy.parser;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import voy.exception.OrbitException;
 import voy.task.Deadline;
@@ -19,7 +20,9 @@ public class TaskParser {
     private static final String EVENT_TO_SEPARATOR = " /to ";
 
     private static final DateTimeFormatter INPUT_DATE_TIME_FORMAT =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm")
+                    .withResolverStyle(ResolverStyle.STRICT);
+
 
     private TaskParser() {
         // Utility class: prevent instantiation.
@@ -37,15 +40,27 @@ public class TaskParser {
      */
     public static int parseTaskIndex(String args) throws OrbitException {
         if (args == null || args.trim().isEmpty()) {
-            throw new OrbitException("Please specify a task number.");
+            throw new OrbitException("Missing task number. Example: mark 1");
+        }
+
+        String trimmed = args.trim();
+
+        // reject if contains spaces (e.g., "1 2")
+        if (trimmed.contains(" ")) {
+            throw new OrbitException("Task number must be a single number. Example: delete 2");
         }
 
         try {
-            return Integer.parseInt(args.trim()) - 1;
+            int oneBased = Integer.parseInt(trimmed);
+            if (oneBased <= 0) {
+                throw new OrbitException("Task number must be a positive integer.");
+            }
+            return oneBased - 1;
         } catch (NumberFormatException e) {
-            throw new OrbitException("Task number must be a number.");
+            throw new OrbitException("Task number must be a number. Example: unmark 3");
         }
     }
+
 
     /**
      * Parses a todo task from user input.
@@ -75,8 +90,10 @@ public class TaskParser {
         if (args == null || args.trim().isEmpty()) {
             throw new OrbitException("Invalid deadline task. Please include task name.");
         }
+        String normalized = args.trim().replaceAll("\\s+", " ");
+        ensureSingleFlag(normalized, " /by ");
+        String[] parts = splitDeadline(normalized);
 
-        String[] parts = splitDeadline(args);
         LocalDateTime by = parseDateTime(parts[1]);
 
         return new Deadline(parts[0].trim(), by);
@@ -96,8 +113,10 @@ public class TaskParser {
         if (args == null || args.trim().isEmpty()) {
             throw new OrbitException("Invalid event task. Please include task name.");
         }
-
-        String[] nameAndFrom = splitEventFrom(args);
+        String normalized = args.trim().replaceAll("\\s+", " ");
+        ensureSingleFlag(normalized, " /from ");
+        ensureSingleFlag(normalized, " /to ");
+        String[] nameAndFrom = splitEventFrom(normalized);
         String eventName = nameAndFrom[0];
 
         String[] fromAndTo = splitEventTo(nameAndFrom[1]);
@@ -105,7 +124,9 @@ public class TaskParser {
         LocalDateTime endDateTime = parseDateTime(fromAndTo[1]);
         assert startDateTime != null : "Start datetime should not be null";
         assert endDateTime != null : "End datetime should not be null";
-        assert !endDateTime.isBefore(startDateTime) : "Event end must not be before start";
+        if (!endDateTime.isAfter(startDateTime)) {
+            throw new OrbitException("Event end must be after start.");
+        }
 
         return new Event(eventName, startDateTime, endDateTime);
     }
@@ -118,12 +139,15 @@ public class TaskParser {
      * @throws OrbitException if the string cannot be parsed
      */
     public static LocalDateTime parseDateTime(String dateTime) throws OrbitException {
+        if (dateTime == null || dateTime.trim().isEmpty()) {
+            throw new OrbitException("Missing date/time. Use: YYYY-MM-DD HH:mm");
+        }
         try {
             return LocalDateTime.parse(dateTime.trim(), INPUT_DATE_TIME_FORMAT);
         } catch (DateTimeParseException e) {
             throw new OrbitException(
                     "Invalid date and/or time format.\n"
-                            + "Please follow: [YYYY-MM-DD HH:MM]"
+                            + "Use: YYYY-MM-DD HH:mm (e.g., 2026-03-12 14:30)"
             );
         }
     }
@@ -150,13 +174,21 @@ public class TaskParser {
         return parts;
     }
 
+    private static void ensureSingleFlag(String args, String flag) throws OrbitException {
+        int first = args.indexOf(flag);
+        int last = args.lastIndexOf(flag);
+        if (first != -1 && first != last) {
+            throw new OrbitException("Duplicate parameter: " + flag.trim());
+        }
+    }
+
     private static String[] splitEventFrom(String args) throws OrbitException {
         String[] parts = args.split(EVENT_FROM_SEPARATOR, 2);
 
-        if (parts.length != 2 || parts[0].trim().isEmpty()) {
+        if (parts.length != 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
             throw new OrbitException(
-                    "Invalid event task description. Please include\n"
-                            + "\"event [task name] /from [start date/time] /to [end date/time]\"."
+                    "Invalid event task description. "
+                            + "\nUse: event [name] /from [YYYY-MM-DD HH:mm] /to [YYYY-MM-DD HH:mm]"
             );
         }
 
@@ -191,31 +223,34 @@ public class TaskParser {
      */
     public static long parseFreeTime(String freeTime) throws OrbitException {
         if (freeTime == null || freeTime.trim().isEmpty()) {
-            throw new OrbitException(
-                    "Invalid free time. Use format: 2h or 90m."
-            );
+            throw new OrbitException("Invalid free time. Use format: free 2h or free 90m.");
         }
 
-        String trimmed = freeTime.trim().toLowerCase();
+        // Allow inputs like "2 h", "90 m" by removing whitespace
+        String trimmed = freeTime.trim().toLowerCase().replaceAll("\\s+", "");
 
         try {
+            long minutes;
+
             if (trimmed.endsWith("h")) {
                 long hours = Long.parseLong(trimmed.substring(0, trimmed.length() - 1));
-                return hours * 60;
+                minutes = hours * 60;
+            } else if (trimmed.endsWith("m")) {
+                minutes = Long.parseLong(trimmed.substring(0, trimmed.length() - 1));
+            } else {
+                // Default: treat as hours if no suffix
+                long hours = Long.parseLong(trimmed);
+                minutes = hours * 60;
             }
 
-            if (trimmed.endsWith("m")) {
-                return Long.parseLong(trimmed.substring(0, trimmed.length() - 1));
+            if (minutes <= 0) {
+                throw new OrbitException("Free time must be greater than 0. Example: free 2h");
             }
 
-            // default: treat as hours
-            long hours = Long.parseLong(trimmed);
-            return hours * 60;
+            return minutes;
 
         } catch (NumberFormatException e) {
-            throw new OrbitException(
-                    "Invalid free time format. Use 2h or 90m."
-            );
+            throw new OrbitException("Invalid free time format. Use: free 2h or free 90m.");
         }
     }
 }

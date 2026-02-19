@@ -29,8 +29,8 @@ public class Parser {
     public static Command parse(String userInput) throws OrbitException {
         validateInput(userInput);
 
-        String trimmed = userInput.trim();
-        String[] tokens = trimmed.split(" ", 2);
+        String normalized = userInput.trim().replaceAll("\\s+", " ");
+        String[] tokens = normalized.split(" ", 2);
 
         CommandType commandType = parseCommandType(tokens[0]);
         String args = (tokens.length == 2) ? tokens[1] : "";
@@ -51,15 +51,25 @@ public class Parser {
         try {
             return CommandType.valueOf(keyword.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new OrbitException("I'm sorry, I don't understand that command.");
+            throw new OrbitException(
+                    "Unknown command: \"" + keyword + "\". \nTry: list, todo, deadline, event, mark, unmark, delete, find, free, bye."
+            );
+        }
+    }
+
+    private static void requireNoArgs(CommandType cmd, String args) throws OrbitException {
+        if (!args.isBlank()) {
+            throw new OrbitException(cmd.name().toLowerCase() + " does not take any arguments.");
         }
     }
 
     private static Command buildCommand(CommandType cmd, String args) throws OrbitException {
         switch (cmd) {
         case LIST:
+            requireNoArgs(cmd, args);
             return new ListCommand();
         case BYE:
+            requireNoArgs(cmd, args);
             return new ByeCommand();
         case TODO:
             return new AddTodoCommand(TaskParser.parseTodo(args));
@@ -74,6 +84,9 @@ public class Parser {
         case EVENT:
             return new AddEventCommand(TaskParser.parseEvent(args));
         case FIND:
+            if (args.isBlank()) {
+                throw new OrbitException("Find requires a keyword. Example: find book");
+            }
             return new FindCommand(args);
         case FREE:
             return new FreeCommand(TaskParser.parseFreeTime(args));
