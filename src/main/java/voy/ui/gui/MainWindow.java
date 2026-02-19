@@ -48,7 +48,7 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().add(
                 DialogBox.getVoyDialog("Hello! I'm Voy 🌊 "
-                                + "How can I help you today?\nType \"list\" to start!",
+                                + "\nHow can I help you today?\n\nHINT: Type \"list\" to start!",
                         voyImage, GREET)
         );
     }
